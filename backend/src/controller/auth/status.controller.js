@@ -14,12 +14,12 @@ const statusChangeController = catchAsync(async (req, res) => {
 
   if (status === 'true') {
     const statusVerifyEnter = await statusService.userStatusService(email);
-    res.status(200).json({ messsage: 'User SuccessFull Change', statusVerifyEnter });
+    res.status(200).json({ messsage: 'User Status SuccessFull Change', user: statusVerifyEnter.userStatus });
   }
 
   if (status === 'false') {
     const statusVerifyEnter = await statusService.userStatusFalse(email);
-    res.status(200).json({ messsage: 'User SuccessFull Change', statusVerifyEnter });
+    res.status(200).json({ messsage: 'User Status SuccessFull Change', user: statusVerifyEnter.userStatus });
   }
 });
 

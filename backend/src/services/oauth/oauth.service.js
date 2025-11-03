@@ -2,6 +2,7 @@ import * as usersModels from '../../models/users.models.js';
 import AppError from '../../utils/appError.js';
 import * as socialLogin from '../../models/socialLogin.models.js';
 import { profileInserData } from '../../models/profile.models.js';
+import bcrypt from 'bcrypt';
 
 const oauthServiceFunction = async (profile) => {
   if (!profile) throw new AppError(`Platfrom auth problem Please try again`, 500);
@@ -12,7 +13,7 @@ const oauthServiceFunction = async (profile) => {
   const email = profile.emails?.[0]?.value || null;
   const photo = profile.photos?.[0]?.value || null;
 
-  if (!platform, !id, !name, !email, !photo)
+  if ((!platform, !id, !name, !email, !photo))
     throw new AppError('Not provide Perfect user detail', 400);
 
   const userData = {
@@ -46,10 +47,14 @@ const oauthServiceFunction = async (profile) => {
       email: insertUserSocailData.email,
     };
 
+    const platformIdHash = await bcrypt.hash(userData.platformId, 10);
+    console.log("without hash userId", userData.platformId);
+    console.log('hash platform Id', platformIdHash);
+
     const socialLoginDB = await socialLogin.socialLogin(
       authUserData.id,
       userData.platform,
-      userData.platformId
+      platformIdHash
     );
 
     console.log('social Login successfull', socialLoginDB);
@@ -64,7 +69,7 @@ const oauthServiceFunction = async (profile) => {
     return {
       message: `user register successfully`,
       user: insertUserSocailData,
-      social: socialLogin,
+      social: socialLoginDB,
       profile: profileUpdate,
     };
   }

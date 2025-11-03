@@ -34,12 +34,12 @@ export const loginUserGet = async (password) => {
 };
 
 export const statusChangeTrue = async (email) => {
-  const res = await pool.query(`UPDATE Users SET status = 'true' WHERE email = $1`, [email]);
+  const res = await pool.query(`UPDATE Users SET status = 'true' WHERE email = $1 RETURNING id, email, status`, [email]);
   return res.rows[0];
 };
 
 export const statusChangeFalse = async (email) => {
-  const res = await pool.query(`UPDATE Users SET status = 'false' WHERE email = $1`, [email]);
+  const res = await pool.query(`UPDATE Users SET status = 'false' WHERE email = $1 RETURNING id, email, status`, [email]);
   return res.rows[0];
 };
 

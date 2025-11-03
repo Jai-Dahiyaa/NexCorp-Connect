@@ -6,14 +6,14 @@ const userStatusService = async (email) => {
 
   const userStatus = await userModel.statusChangeTrue(email);
 
-  return { message: 'Your status change successfully', userStatus };
+  return { userStatus };
 };
 
 const userStatusFalse = async (email) => {
   if (!email) throw new AppError('Please Enter Your Email', 404);
 
   const userStatus = await userModel.statusChangeFalse(email);
-  return { message: 'Your status change successfully', userStatus };
+  return { userStatus };
 };
 
 export default {userStatusService, userStatusFalse};

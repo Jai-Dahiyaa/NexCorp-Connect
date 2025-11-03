@@ -23,7 +23,7 @@ const signUpOTPVerifyController = catchAsync(async (req, res) => {
     maxAge: 15 * 60 * 1000,
   });
 
-  res.status(201).json({ message: 'OTP Verify user successfully register', users });
+  res.status(200).json({ message: 'OTP Verify user successfully register', users });
 });
 
 export default signUpOTPVerifyController;

@@ -11,7 +11,7 @@ export const signUpOTPSchema = Joi.object({
 });
 
 export const roleAssignSchema = Joi.object({
-  role: Joi.string().valid('company', 'user', 'admin').required(),
+  role: Joi.string().valid('users','employee','admin').required(),
 });
 
 export const loginSchema = Joi.object({

@@ -3,7 +3,7 @@ import app from '../src/index.js';
 import redisClient from '../src/config/redis.js';
 import db from '../src/db/db.js';
 
-const testEmail = 'ok3a11eaqqas22wwd@gmail.com';
+const testEmail = 'edrw24555edsww1wsw2saq3wxwawarsww1@gmail.com';
 const testPassword = 'jai@123';
 const testRole = 'admin';
 
@@ -43,7 +43,6 @@ describe('Signup Route - /auth/signUp', () => {
 
     accessToken = cookies.find((c) => c.startsWith('accessToken=')).split(';')[0];
     expect(accessToken).toMatch(/accessToken=/i);
-
   });
 
   it('should assign role and return updated user with tokens', async () => {
@@ -52,7 +51,7 @@ describe('Signup Route - /auth/signUp', () => {
       .set('Cookie', accessToken)
       .send({ role: testRole });
 
-    expect(res.statusCode).toBe(200); 
+    expect(res.statusCode).toBe(200);
 
     expect(res.body.message).toBe('User Register Sucessfully');
 
@@ -67,6 +66,25 @@ describe('Signup Route - /auth/signUp', () => {
     expect(cookies[0]).toMatch(/accessToken/i);
     expect(cookies[1]).toMatch(/refreshToken/i);
   });
+
+  it('should update status', async () => {
+    const res = await request(app)
+      .post('/auth/statusChange')
+      .set('Cookie', accessToken)
+      .send({ status: 'true' });
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body.message).toBe('User Status SuccessFull Change');
+
+    const id = res.body.user.id;
+
+    expect(res.body.user).toHaveProperty('id');
+    expect(res.body.user).toEqual({
+      id: id,
+      email: testEmail,
+      status: true,
+    });
+  });
 });
 
 afterAll(async () => {
@@ -77,5 +95,4 @@ afterAll(async () => {
   } catch (err) {
     console.error('Cleanup error:', err);
   }
-}, 15000);
-
+}, 25000);

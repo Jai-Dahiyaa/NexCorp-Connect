@@ -9,4 +9,4 @@ const signUpController = catchAsync(async (req, res) => {
   res.status(200).json({ message: 'Send OTP on your email' });
 });
 
-export default signUpController;
+export default signUpController; 

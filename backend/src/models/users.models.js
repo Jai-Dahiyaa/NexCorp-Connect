@@ -47,7 +47,7 @@ export const refreshRouteGetUsers = async (email) => {
   const res = await pool.query(`SELECT * FROM users WHERE email = $1`, [email]);
   return res.rows[0];
 };
-
+ 
 export const forgetUserPassword = async (email, password) => {
   const res = await pool.query(`UPDATE users SET password = $1 WHERE email = $2`, [
     password,

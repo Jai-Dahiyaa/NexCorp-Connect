@@ -3,7 +3,7 @@ import app from '../src/index.js';
 import redisClient from '../src/config/redis.js';
 import db from '../src/db/db.js';
 
-const testEmail = 'ok3a11eaqqas22wwd@gmail.com';
+const testEmail = 'edrw24555eedssesswwwww1awsw2saq3wxwawarsww1@gmail.com';
 const testPassword = 'jai@123';
 const testRole = 'admin';
 
@@ -43,7 +43,6 @@ describe('Signup Route - /auth/signUp', () => {
 
     accessToken = cookies.find((c) => c.startsWith('accessToken=')).split(';')[0];
     expect(accessToken).toMatch(/accessToken=/i);
-
   });
 
   it('should assign role and return updated user with tokens', async () => {
@@ -52,7 +51,7 @@ describe('Signup Route - /auth/signUp', () => {
       .set('Cookie', accessToken)
       .send({ role: testRole });
 
-    expect(res.statusCode).toBe(200); 
+    expect(res.statusCode).toBe(200);
 
     expect(res.body.message).toBe('User Register Sucessfully');
 
@@ -67,6 +66,58 @@ describe('Signup Route - /auth/signUp', () => {
     expect(cookies[0]).toMatch(/accessToken/i);
     expect(cookies[1]).toMatch(/refreshToken/i);
   });
+
+  it('should update status', async () => {
+    const res = await request(app)
+      .post('/auth/statusChange')
+      .set('Cookie', accessToken)
+      .send({ status: 'true' });
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body.message).toBe('User Status SuccessFull Change');
+
+    const id = res.body.user.id;
+
+    expect(res.body.user).toHaveProperty('id');
+    expect(res.body.user).toEqual({
+      id: id,
+      email: testEmail,
+      status: true,
+    });
+  });
+});
+
+describe('Login Route = /auth/login', () => {
+  it('should login successfully with correct credentials', async () => {
+    const res = await request(app)
+      .post('/auth/login')
+      .send({ email: testEmail, password: testPassword });
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body.message).toBe('Welcome Back');
+    expect(res.body.users).toHaveProperty('id');
+
+    const id = res.body.users.id;
+    const password = res.body.users.password;
+    const create_at = res.body.users.created_at;
+
+    expect(res.body.users).toEqual({
+      id: id,
+      email: testEmail,
+      password: password,
+      role: testRole,
+      status: true,
+      created_at: create_at,
+    });
+
+    const cookies = res.headers['set-cookie'];
+
+    const accessToken = cookies.find((c) => c.startsWith('accessToken')).split(';')[0];
+    const refreshToken = cookies.find((c) => c.startsWith('refreshToken')).split(';')[0];
+
+    expect(accessToken).toMatch(/^accessToken=[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$/);
+    expect(refreshToken).toMatch(/^refreshToken=[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$/);
+  });
 });
 
 afterAll(async () => {
@@ -77,5 +128,4 @@ afterAll(async () => {
   } catch (err) {
     console.error('Cleanup error:', err);
   }
-}, 15000);
-
+}, 25000);

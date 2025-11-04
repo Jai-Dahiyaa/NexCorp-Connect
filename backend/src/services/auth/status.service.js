@@ -16,4 +16,4 @@ const userStatusFalse = async (email) => {
   return { userStatus };
 };
 
-export default {userStatusService, userStatusFalse};
+export default {userStatusService, userStatusFalse}; 

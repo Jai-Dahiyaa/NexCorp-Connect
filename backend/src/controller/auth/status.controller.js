@@ -22,5 +22,5 @@ const statusChangeController = catchAsync(async (req, res) => {
     res.status(200).json({ message: 'User Status SuccessFull Change', user: statusVerifyEnter.userStatus });
   }
 });
-
+ 
 export default statusChangeController;

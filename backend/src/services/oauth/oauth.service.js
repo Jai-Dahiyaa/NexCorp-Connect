@@ -60,7 +60,7 @@ const oauthServiceFunction = async (profile) => {
     console.log('social Login successfull', socialLoginDB);
 
     const profileUpdate = await profileInserData(userData.name, userData.photo, authUserData.id);
-
+ 
     console.log('profile', profileUpdate);
 
     if (!authUserData.email && !authUserData.id)

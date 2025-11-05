@@ -3,7 +3,7 @@ import app from '../src/index.js';
 import redisClient from '../src/config/redis.js';
 import db from '../src/db/db.js';
 
-const testEmail = 'edrw24555eedsse3sssswew1awsw2saq3wxwawarsww1@gmail.com';
+const testEmail = 'edrw24555eedssesswwwww1awsw2saq3wxwawarsww1@gmail.com';
 const testPassword = 'jai@123';
 const testRole = 'admin';
 
@@ -129,4 +129,3 @@ afterAll(async () => {
     console.error('Cleanup error:', err);
   }
 }, 25000);
- 

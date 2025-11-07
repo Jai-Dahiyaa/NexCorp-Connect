@@ -52,7 +52,7 @@ const oauthServiceFunction = async (profile) => {
     const socialLoginDB = await socialLogin.socialLogin(
       authUserData.id,
       userData.platform,
-      platformIdHash
+      platformIdHash 
     );
 
     const profileUpdate = await profileInserData(userData.name, userData.photo, authUserData.id);

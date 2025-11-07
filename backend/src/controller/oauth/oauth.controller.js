@@ -23,7 +23,7 @@ const oauthController = catchAsync(async (req, res) => {
   res.cookie('accessToken', tokenGenerate, {
     httpOnly: true,
     secure: true,
-    sameSite: 'Strict',
+    sameSite: 'Strict', 
     maxAge: 25 * 60 * 1000,
   });
 

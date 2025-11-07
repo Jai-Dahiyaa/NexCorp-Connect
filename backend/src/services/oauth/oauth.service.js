@@ -27,7 +27,6 @@ const oauthServiceFunction = async (profile) => {
   const findUser = await usersModels.findByEmail(userData.email);
 
   if (findUser) {
-    console.log('find userf', findUser.id, findUser.email);
 
     const updateUsers = await socialLogin.updateSocialLogin(
       userData.platform,
@@ -46,13 +45,11 @@ const oauthServiceFunction = async (profile) => {
     };
 
     const platformIdHash = await bcrypt.hash(userData.platformId, 10);
-    console.log("without hash userId", userData.platformId);
-    console.log('hash platform Id', platformIdHash);
 
     const socialLoginDB = await socialLogin.socialLogin(
       authUserData.id,
       userData.platform,
-      platformIdHash
+      platformIdHash 
     );
 
     const profileUpdate = await profileInserData(userData.name, userData.photo, authUserData.id);

@@ -35,8 +35,6 @@ const oauthServiceFunction = async (profile) => {
       findUser.id
     );
 
-    console.log(updateUsers);
-
     return { message: 'Welcome Back', user: findUser, social: updateUsers };
     // throw new AppError('User Already Register', 409);
   } else {
@@ -57,11 +55,7 @@ const oauthServiceFunction = async (profile) => {
       platformIdHash
     );
 
-    console.log('social Login successfull', socialLoginDB);
-
     const profileUpdate = await profileInserData(userData.name, userData.photo, authUserData.id);
- 
-    console.log('profile', profileUpdate);
 
     if (!authUserData.email && !authUserData.id)
       throw new AppError('Bad Request Please try again', 400);

@@ -10,8 +10,6 @@ const oauthController = catchAsync(async (req, res) => {
   const result = await oauthServiceFunction(profile);
   if (!result) throw new AppError('User data not insert please try again', 400);
 
-  console.log('id',result.user.id, 'email',result.user.email, 'platform',result.social.platform_name);
-
   const payload = {
     id: result.user.id,
     email: result.user.email,
@@ -28,8 +26,6 @@ const oauthController = catchAsync(async (req, res) => {
     sameSite: 'Strict',
     maxAge: 25 * 60 * 1000,
   });
-
-  console.log('token', tokenGenerate);
 
   res.status(200).json({ message: 'Users successfully register', user: result.user });
 });

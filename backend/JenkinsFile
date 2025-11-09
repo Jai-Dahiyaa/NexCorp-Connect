@@ -12,21 +12,27 @@ pipeline {
     stage ('install Dependencies') {
       steps {
         echo "Running npm install..."
-        sh "npm install"
+        dir('backend') {
+          sh 'npm install'
+        }
       }
     }
 
     stage ('Run Test') {
       steps {
         echo "Running npm test..."
-        sh "npm test"
+        dir('backend') {
+          sh 'npm test'
+        }
       }
     }
 
     stage ('Start Project') {
       steps {
         echo "Starting project..."
-        sh "npm run dev"
+        dir('backend') {
+          sh 'npm run dev'
+        }
       }
     }
   }

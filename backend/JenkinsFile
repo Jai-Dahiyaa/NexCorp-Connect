@@ -3,28 +3,28 @@ pipeline {
 
   stages {
     stage ('Checkout Code') {
-      step {
+      steps {
         echo "Checking out code..."
         checkout scm
       }
     }
 
     stage ('install Dependencies') {
-      step {
+      steps {
         echo "Running npm install..."
         sh "npm install"
       }
     }
 
     stage ('Run Test') {
-      step {
+      steps {
         echo "Running npm test..."
         sh "npm test"
       }
     }
 
     stage ('Start Project') {
-      step {
+      steps {
         echo "Starting project..."
         sh "npm run dev"
       }

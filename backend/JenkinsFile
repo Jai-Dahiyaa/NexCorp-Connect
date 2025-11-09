@@ -1,0 +1,42 @@
+pipeline {
+  agent any
+
+  stages {
+    stage ('Checkout Code') {
+      step {
+        echo "Checking out code..."
+        Checkout scm
+      }
+    }
+
+    stage ('install Dependencies') {
+      step {
+        echo "Running npm install..."
+        sh "npm install"
+      }
+    }
+
+    stage ('Run Test') {
+      step {
+        echo "Running npm test..."
+        sh "npm test"
+      }
+    }
+
+    stage ('Start Project') {
+      step {
+        echo "Starting project..."
+        sh "npm run dev"
+      }
+    }
+  }
+
+  post {
+    success {
+      echo "Build and run successfull"
+    } 
+    failure {
+      echo "Build faild. Check logs"
+    }
+  }
+}

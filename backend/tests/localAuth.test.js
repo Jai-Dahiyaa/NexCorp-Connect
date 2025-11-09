@@ -3,7 +3,7 @@ import app from '../src/index.js';
 import redisClient from '../src/config/redis.js';
 import db from '../src/db/db.js';
 
-const testEmail = 'edrw24555eedssesswwwwww1awsw2saq3wxwawarsww1@gmail.com';
+const testEmail = `testuser_12@gmail.com`;
 const testPassword = 'jai@123';
 const testRole = 'admin';
 

@@ -6,5 +6,5 @@ export default {
   testMatch: ["**/tests/**/*.test.js"],
   collectCoverage: true,
   coverageDirectory: "coverage",
-  setupFiles: ["./jest.mock.js"],
+  setupFiles: ["./jest.setup.js"],
 };

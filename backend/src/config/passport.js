@@ -1,4 +1,6 @@
 import passport from 'passport';
+import dotenv from "dotenv";
+dotenv.config();
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as GitHubStrategy } from 'passport-github2';
 import { Strategy as LinkedInStrategy } from 'passport-linkedin-oauth2';

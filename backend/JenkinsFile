@@ -1,6 +1,14 @@
 pipeline {
   agent any
 
+  environment {
+    POSTGRES_HOST = 'localhost'
+    POSTGRES_USER = 'postgres'
+    POSTGRES_PASSWORD = '87&62@'
+    POSTGRES_DB = 'issuelog'
+    REDIS_URL = 'redis://127.0.0.1:6379'
+  }
+
   stages {
     stage ('Checkout Code') {
       steps {
@@ -13,7 +21,7 @@ pipeline {
       steps {
         echo "Running npm install..."
         dir('backend') {
-          sh 'npm install'
+          sh 'npm ci'
         }
       }
     }

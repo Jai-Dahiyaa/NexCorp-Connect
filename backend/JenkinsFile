@@ -9,6 +9,12 @@ pipeline {
     REDIS_URL = 'redis://127.0.0.1:6379'
   }
 
+  environment {
+  GOOGLE_CLIENT_ID = '527983329313-238l17ih3ukoot69osb33arl8ud0kq6o.apps.googleusercontent.com'
+  GOOGLE_CLIENT_SECRET = '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'
+}
+
+
   stages {
     stage ('Checkout Code') {
       steps {

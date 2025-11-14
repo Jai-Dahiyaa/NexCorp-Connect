@@ -1,5 +1,6 @@
 pipeline {
   agent any
+  
 
   stages {
     stage ('Checkout Code') {
@@ -14,6 +15,30 @@ pipeline {
         echo "Running npm install..."
         dir('backend') {
           sh 'npm ci'
+        }
+      }
+    }
+
+    stage ('Run Test') {
+      steps {
+        echo "Running npm test with env vars..."
+        dir('backend') {
+          withEnv([
+            "DB_HOST=${params.DB_HOST}",
+            "DB_USER=${params.DB_USER}",
+            "DB_PASS=${params.DB_PASS}",
+            "DB_NAME=${params.DB_NAME}",
+            "DB_PORT=${params.DB_PORT}"
+          ]) {
+            sh '''
+              echo "🔍 DB_HOST=$DB_HOST"
+              echo "🔍 DB_USER=$DB_USER"
+              echo "🔍 DB_PASS=$DB_PASS"
+              echo "🔍 DB_NAME=$DB_NAME"
+              echo "🔍 DB_PORT=$DB_PORT"
+              npm test
+            '''
+          }
         }
       }
     }

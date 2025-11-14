@@ -19,7 +19,7 @@ pipeline {
       }
     }
 
-    stage ('Run Test') {
+    stage ('dbc console Test') {
       steps {
         echo "Running npm test with env vars..."
         dir('backend') {

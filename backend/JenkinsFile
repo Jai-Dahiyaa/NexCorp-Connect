@@ -27,6 +27,16 @@ pipeline {
       }
     }
 
+    stage('Debug Vars') {
+  steps {
+    echo "DB_HOST=${params.DB_HOST}"
+    echo "DB_USER=${params.DB_USER}"
+    echo "DB_PASS=${params.DB_PASS}"
+    echo "DB_NAME=${params.DB_NAME}"
+  }
+}
+
+
     stage ('Start Project') {
       steps {
         echo "Starting project..."

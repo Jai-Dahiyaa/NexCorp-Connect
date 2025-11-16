@@ -3,14 +3,7 @@ import app from '../src/index.js';
 import redisClient from '../src/config/redis.js';
 import db from '../src/db/db.js';
 
-let server;
-const TEST_PORT = 0;
-
-beforeAll(async () => {
-  server = app.listen(TEST_PORT);
-});
-
-const testEmail = `testuser_${Date.now()}@gmail.com`;
+const testEmail = `testuser_12@gmail.com`;
 const testPassword = 'jai@123';
 const testRole = 'admin';
 
@@ -131,10 +124,6 @@ afterAll(async () => {
   try {
     await db.query(`DELETE FROM users WHERE email = '${testEmail}'`);
     await redisClient.del(`otp:${testEmail}`);
-    if (redisClient.isOpen) {
-      await redisClient.quit();
-    }
-    await new Promise(resolve => server.close(resolve));
   } catch (err) {
     console.error('Cleanup error:', err);
   }

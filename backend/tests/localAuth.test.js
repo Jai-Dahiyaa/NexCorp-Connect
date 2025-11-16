@@ -10,7 +10,7 @@ beforeAll(async () => {
   server = app.listen(TEST_PORT);
 });
 
-const testEmail = `testuser_12@gmail.com`;
+const testEmail = `testuser_${Date.now()}@gmail.com`;
 const testPassword = 'jai@123';
 const testRole = 'admin';
 
@@ -134,7 +134,6 @@ afterAll(async () => {
     if (redisClient.isOpen) {
       await redisClient.quit();
     }
-    await db.release();
     await new Promise(resolve => server.close(resolve));
   } catch (err) {
     console.error('Cleanup error:', err);

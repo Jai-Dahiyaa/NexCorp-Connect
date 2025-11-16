@@ -1,3 +1,6 @@
+import dotenv from 'dotenv'
+import './db/db.js';
+import "./config/redis.js"
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -6,6 +9,8 @@ import { swaggerUi, swaggerSpec } from './config/swagger.js';
 import errorMiddleware from './middleware/error.middleware.js';
 import Routes from './routes/index.js';
 import cookieParser from 'cookie-parser';
+
+dotenv.config();
 
 const app = express();
 

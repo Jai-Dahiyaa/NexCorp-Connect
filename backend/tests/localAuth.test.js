@@ -1,5 +1,5 @@
 import request from 'supertest';
-import app from '../src/index.js';
+import app from '../src/server.js';
 import redisClient from '../src/config/redis.js';
 import db from '../src/db/db.js';
 

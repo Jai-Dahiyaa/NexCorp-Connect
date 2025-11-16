@@ -4,7 +4,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import { swaggerUi, swaggerSpec } from './config/swagger.js';
 import errorMiddleware from './middleware/error.middleware.js';
-import registerRoutes from './routes/index.js';
+import Routes from './routes/index.js';
 import cookieParser from 'cookie-parser';
 
 const app = express();
@@ -16,7 +16,7 @@ app.use(morgan('dev'));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(errorMiddleware);
 app.use(cookieParser())
-registerRoutes(app)
+Routes(app)
 
 app.get('/', (req, res) => {
   res.send('<h1>Server is running</h1>');

@@ -126,7 +126,7 @@ afterAll(async () => {
     await redisClient.del(`otp:${testEmail}`);
 
     await redisClient.quit();  
-    await db.end(); 
+    await db.release(); 
   } catch (err) {
     console.error('Cleanup error:', err);
   }

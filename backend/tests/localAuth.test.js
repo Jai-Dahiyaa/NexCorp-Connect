@@ -124,13 +124,9 @@ afterAll(async () => {
   try {
     await db.query(`DELETE FROM users WHERE email = '${testEmail}'`);
     await redisClient.del(`otp:${testEmail}`);
-    await db.release();
+    await redisClient.quit();  
+    await db.env();
   } catch (err) {
     console.error('Cleanup error:', err);
   }
 }, 25000);
-
-afterAll(async () => {
-  await db.end();        
-  await redisClient.quit();
-});

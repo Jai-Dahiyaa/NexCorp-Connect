@@ -1,15 +1,12 @@
-import { jest } from '@jest/globals';
 import request from 'supertest';
 import app from '../src/index.js';
 import redisClient from '../src/config/redis.js';
 import db from '../src/db/db.js';
 
-jest.setTimeout(60000);
-
 let server;
 const TEST_PORT = 0;
 
-beforeAll(() => {
+beforeAll(async () => {
   server = app.listen(TEST_PORT);
 });
 
@@ -132,23 +129,14 @@ describe('Login Route = /auth/login', () => {
 
 afterAll(async () => {
   try {
-    // Test data cleanup
     await db.query(`DELETE FROM users WHERE email = '${testEmail}'`);
     await redisClient.del(`otp:${testEmail}`);
-
-    // Close Redis
-    await redisClient.quit();
-
-    // Close DB pool
+    if (redisClient.isOpen) {
+      await redisClient.quit();
+    }
     await db.release();
-
-    // Properly close server (await with Promise)
     await new Promise(resolve => server.close(resolve));
-
   } catch (err) {
     console.error('Cleanup error:', err);
   }
-});
-
-
-
+}, 30000);

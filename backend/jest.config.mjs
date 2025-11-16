@@ -5,5 +5,7 @@ export default {
   moduleFileExtensions: ["js"],
   testMatch: ["<rootDir>/tests/**/*.test.js"],
   collectCoverage: true,
-  coverageDirectory: "coverage"
+  coverageDirectory: "coverage",
+  forceExit: true,
+  detectOpenHandles: true,
 };

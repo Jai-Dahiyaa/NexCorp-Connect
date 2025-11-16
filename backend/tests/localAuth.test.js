@@ -129,3 +129,8 @@ afterAll(async () => {
     console.error('Cleanup error:', err);
   }
 }, 25000);
+
+afterAll(async () => {
+  await db.end();        
+  await redisClient.quit();
+});

@@ -28,14 +28,6 @@ pipeline {
       }
     }
 
-    stage ('Start Project') {
-      steps {
-        echo "Starting project..."
-        dir('backend') {
-          sh 'npm start'
-        }
-      }
-    }
   }
 
   post {

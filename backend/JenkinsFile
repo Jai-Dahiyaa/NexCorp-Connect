@@ -19,18 +19,18 @@ pipeline {
       }
     }
 
-    // stage ('Run Test') {
-    //   steps {
-    //     echo "Running npm test..."
-    //     dir('backend') {
-    //       sh 'npm test'
-    //     }
-    //   }
-    // }
+    stage ('Run Test') {
+      steps {
+        echo "Running npm test..."
+        dir('backend') {
+          sh 'npm test'
+        }
+      }
+    }
 
     stage ('Build Docker Image') {
       steps {
-        sh 'docker build -t skillbrodge_app'
+        sh 'docker build -t skillbrodge_app .'
       }
     }
 

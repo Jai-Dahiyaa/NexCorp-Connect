@@ -4,9 +4,10 @@ import * as userModel from '../../models/users.models.js';
 const loginOTPService = async (email) => {
   if (!email) throw new AppError('email is missing', 404);
 
-  const users = await userModel.userLoginOTPQuery(email);
+  const result = await userModel.userLoginOTPQuery(email);
+  if(!result) throw new AppError('user not find please try again', 404);
 
-  return { message: 'user login successfully', users };
+  return { result };
 };
 
 export default loginOTPService;

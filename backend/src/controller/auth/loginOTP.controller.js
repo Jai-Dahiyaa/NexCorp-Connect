@@ -17,10 +17,10 @@ const loginOTPController = catchAsync(async (req, res) => {
   if (!findUsers) throw new AppError('User not found Please Register First', 403);
 
   const loginOtp = generateOTP();
-  const hashOTP = await bcrypt.hash(loginOtp, 10);
+
   await sendTestEmail(email, 'Login OTP', loginOtp);
 
-  await redisClient.set(`otp:loginOTP:${email}`, hashOTP, { EX: 300 });
+  await redisClient.set(`otp:loginOTP:${email}`, loginOtp, { EX: 300 });
 
   const payload = {
     email: email,
@@ -32,11 +32,12 @@ const loginOTPController = catchAsync(async (req, res) => {
 
   res.cookie('login-otp', generateLoginOTPToken, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'development',
+    secure: true,
+    sameSite: 'Strict',
     maxAge: 15 * 60 * 1000,
   });
 
-  res.status(200).json({ message: 'Login OTP send your email Successfully', loginOtp });
+  res.status(200).json({ message: 'Login OTP send your email Successfully' });
 });
 
 const loginOTPuserVerify = catchAsync(async (req, res) => {
@@ -71,9 +72,9 @@ const loginOTPuserVerify = catchAsync(async (req, res) => {
   const users = await loginOTPService(redisGetTokenEmail);
 
   const payload = {
-    id: users.users.id,
-    email: users.users.email,
-    role: users.users.role,
+    id: users.id,
+    email: users.email,
+    role: users.role,
   };
 
   const accessToken = utilsToken.accessTokenGenerate(payload);
@@ -95,12 +96,12 @@ const loginOTPuserVerify = catchAsync(async (req, res) => {
 
   res.clearCookie('login-otp', {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'development',
+    secure: true,
     sameSite: 'Strict',
     path: '/',
   });
 
-  res.status(200).json({ message: 'User Login SuccessFully', users });
+  res.status(200).json({ message: 'User Login SuccessFully', users: users.result });
 });
 
 export default {

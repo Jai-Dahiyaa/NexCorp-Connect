@@ -16,10 +16,10 @@ export const createUsers = async (email, password) => {
 };
 
 export const insertUserRole = async (email, role) => {
-  const res = await pool.query(`UPDATE users SET role = $1 WHERE email = $2 RETURNING *`, [
-    role,
-    email,
-  ]);
+  const res = await pool.query(
+    `UPDATE users SET role = $1 WHERE email = $2 RETURNING id, email, role, status, created_at`,
+    [role, email]
+  );
   return res.rows[0];
 };
 
@@ -34,12 +34,18 @@ export const loginUserGet = async (password) => {
 };
 
 export const statusChangeTrue = async (email) => {
-  const res = await pool.query(`UPDATE Users SET status = 'true' WHERE email = $1 RETURNING id, email, status`, [email]);
+  const res = await pool.query(
+    `UPDATE Users SET status = 'true' WHERE email = $1 RETURNING id, email, status`,
+    [email]
+  );
   return res.rows[0];
 };
 
 export const statusChangeFalse = async (email) => {
-  const res = await pool.query(`UPDATE Users SET status = 'false' WHERE email = $1 RETURNING id, email, status`, [email]);
+  const res = await pool.query(
+    `UPDATE Users SET status = 'false' WHERE email = $1 RETURNING id, email, status`,
+    [email]
+  );
   return res.rows[0];
 };
 
@@ -47,7 +53,7 @@ export const refreshRouteGetUsers = async (email) => {
   const res = await pool.query(`SELECT * FROM users WHERE email = $1`, [email]);
   return res.rows[0];
 };
- 
+
 export const forgetUserPassword = async (email, password) => {
   const res = await pool.query(`UPDATE users SET password = $1 WHERE email = $2`, [
     password,
@@ -57,7 +63,10 @@ export const forgetUserPassword = async (email, password) => {
 };
 
 export const userLoginOTPQuery = async (email) => {
-  const res = await pool.query(`SELECT * FROM users WHERE email = $1`, [email]);
+  const res = await pool.query(
+    `SELECT id, email, role, status, created_at  FROM users WHERE email = $1`,
+    [email]
+  );
   return res.rows[0];
 };
 

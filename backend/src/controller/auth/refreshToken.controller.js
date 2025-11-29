@@ -14,9 +14,9 @@ const refreshTokenController = catchAsync(async (req, res) => {
   const users = await refreshTokenService(decode.email);
 
   const newPayload = {
-    id: users.users.id,
-    email: users.users.email,
-    role: users.users.role,
+    id: users.id,
+    email: users.email,
+    role: users.role,
   };
 
   const newAccessToken = utilsToken.accessTokenGenerate(newPayload);

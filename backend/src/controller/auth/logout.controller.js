@@ -12,14 +12,14 @@ const logoutController = catchAsync(async (req, res) => {
   if (decode) {
     res.clearCookie('accessToken', {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'development',
+      secure: true,
       sameSite: 'Strict',
       path: '/',
     });
 
     res.clearCookie('refreshToken', {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'development',
+      secure: true,
       sameSite: 'Strict',
       path: '/',
     });

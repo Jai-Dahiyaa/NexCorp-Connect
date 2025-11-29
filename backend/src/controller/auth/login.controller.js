@@ -10,9 +10,9 @@ const loginController = catchAsync(async (req, res) => {
   const users = await loginService(email, password);
 
   const payload = {
-    id: users.payload.id,
-    email: users.payload.email,
-    role: users.payload.role,
+    id: users.users.id,
+    email: users.users.email,
+    role: users.users.role,
   };
 
   const accessToken = utilsToken.accessTokenGenerate(payload);

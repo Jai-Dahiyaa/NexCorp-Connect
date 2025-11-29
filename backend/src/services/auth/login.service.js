@@ -18,15 +18,17 @@ const loginService = async (email, password) => {
 
   if (!bcrypt.compareSync(password, originalConvert)) throw new AppError('Password incorrect', 401);
 
-  const users = await useraModel.loginUserGet(loginPassword.password);
+  const result = await useraModel.loginUserGet(loginPassword.password);
 
-  const payload = {
-    id:users.id,
-    email:users.email,
-    role:users.role
+  const users = {
+    id: result.id,
+    email: result.email,
+    role: result.role,
+    status: result.status,
+    created_at: result.created_at  
   }
 
-  return { message: `user login successfully`, users, payload };
+  return { message: `user login successfully`, users };
 };
 
 export default loginService;

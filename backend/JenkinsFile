@@ -30,10 +30,10 @@ pipeline {
 
     stage ('Build Docker Image') {
       steps {
-        sh '''
-        cd backend
-        docker build -t skillbrodge_app . 
-        '''
+        echo "Running Docker image"
+        dir('backend') {
+          sh "docker build -t skillbrodge_app . "
+        }
       }
     }
 

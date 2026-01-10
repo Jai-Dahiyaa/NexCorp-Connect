@@ -62,34 +62,4 @@ router.get('/github', passport.authenticate('github', {scope: ['user:email']}))
  */
 router.get('/github/callback', passport.authenticate('github', {session:false}),oauthController)
 
-//linkedin
-/**
- * @swagger
- * /auth/linkedin:
- *   get:
- *     summary: Redirect user to LinkedIn OAuth2 login
- *     tags:
- *       - OAuth
- *     responses:
- *       302:
- *         description: Redirect to LinkedIn login page
- */
-router.get('/linkedin', passport.authenticate('linkedin', {scope: ['r_emailaddress', 'r_liteprofile']}))
-
-
-/**
- * @swagger
- * /auth/linkedin/callback:
- *   get:
- *     summary: Handle LinkedIn OAuth2 callback and authenticate user
- *     tags:
- *       - OAuth
- *     responses:
- *       200:
- *         description: User authenticated via LinkedIn and tokens issued
- *       401:
- *         description: Invalid or expired LinkedIn token
- */
-router.get('/linkedin/callback', passport.authenticate('linkedin', {session: false}),oauthController)
-
 export default router;

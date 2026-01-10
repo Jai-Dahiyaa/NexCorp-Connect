@@ -1,10 +1,10 @@
 import request from 'supertest';
-import app from '../src/server.js';
+import app from '../src/index.js';
 import redisClient from '../src/config/redis.js';
 import db from '../src/db/db.js';
 import AppError from '../src/utils/appError.js';
 
-const testEmail = `testuser_12@gmail.com`;
+const testEmail = `testuser_123@gmail.com`;
 const testPassword = 'jai@123';
 const testRole = 'admin';
 

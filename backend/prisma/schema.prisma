@@ -1,0 +1,165 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String?   @db.VarChar(60)
+  password  String?   @db.VarChar(100)
+  role      String    @db.VarChar(50)
+  status    Boolean   @default(false)
+  createdAt DateTime  @default(now())   @map("created_at")
+
+  socialLogins   SocialLogin[]
+  issuesCreated  IssuesLogs[] @relation("CreatedBy")
+  issuesAssigned IssuesLogs[] @relation("AssignedTo")
+  statusLogs     StatusLogs[]
+  comments       Comments[]
+  notificationsTriggered Notifications[] @relation("TriggeredBy")
+  notificationsReceived  Notifications[] @relation("ReceivedBy")
+  uploads        Uploads[]
+  sessions       Sessions[]
+  activityLogs   ActivityLogs[]
+  profiles       Profiles[]
+
+  @@map("users")
+}
+
+model SocialLogin {
+  id              Int      @id @default(autoincrement())
+  userId          Int
+  platformName    String?  @db.VarChar(100)
+  platformUserId  String   @unique @db.VarChar(150)
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("social_login")
+}
+
+model IssuesLogs {
+  id               Int      @id @default(autoincrement())
+  createdByUserId  Int
+  assignedToUserId Int
+  title            String?  @db.VarChar(50)
+  description      String?  @db.VarChar(500)
+  priority         String   @db.VarChar(50)
+  status           String   @db.VarChar(50)
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @default(now()) @map("updated_at")
+
+  createdBy  User @relation("CreatedBy", fields: [createdByUserId], references: [id])
+  assignedTo User @relation("AssignedTo", fields: [assignedToUserId], references: [id])
+
+  screenshots Uploads[] @relation("IssueScreenshots")
+
+  statusLogs   StatusLogs[]
+  comments     Comments[]
+  notifications Notifications[]
+
+  @@map("issues_logs")
+}
+
+model StatusLogs {
+  id               Int      @id @default(autoincrement())
+  issueId          Int
+  changedByUserId  Int
+  previousStatus   String?  @db.VarChar(50)
+  newStatus        String   @db.VarChar(50)
+  reviewNote       String?  @db.Text
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  issue IssuesLogs @relation(fields: [issueId], references: [id])
+  changedBy User   @relation(fields: [changedByUserId], references: [id])
+
+  @@map("status_logs")
+}
+
+model Comments {
+  id           Int      @id @default(autoincrement())
+  issueId      Int
+  senderUserId Int
+  message      String?  @db.VarChar(500)
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  issue IssuesLogs @relation(fields: [issueId], references: [id])
+  sender User      @relation(fields: [senderUserId], references: [id])
+
+  @@map("comments")
+}
+
+model Notifications {
+  id               Int      @id @default(autoincrement())
+  issueId          Int
+  triggeredByUserId Int
+  receiverUserId   Int
+  type             String   @db.VarChar(50)
+  seenStatus       String   @default("unseen") @db.VarChar(10)
+  message          String?  @db.VarChar(500)
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  issue IssuesLogs @relation(fields: [issueId], references: [id])
+  triggeredBy User @relation("TriggeredBy", fields: [triggeredByUserId], references: [id])
+  receiver    User @relation("ReceivedBy", fields: [receiverUserId], references: [id])
+
+  @@map("notifications")
+}
+
+model Uploads {
+  id               Int      @id @default(autoincrement())
+  issueId          Int
+  fileUrl          String   @db.Text
+  uploadedByUserId Int
+  cloudPath        String   @db.Text
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  issue IssuesLogs @relation("IssueScreenshots", fields: [issueId], references: [id])
+  uploadedBy User  @relation(fields: [uploadedByUserId], references: [id])
+
+  @@map("uploads")
+}
+
+model Sessions {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  jwtToken     String   @db.Text
+  refreshToken String?  @db.Text
+  expiry       DateTime @db.Timestamp
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("sessions")
+}
+
+model ActivityLogs {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  actionType   String   @db.VarChar(50)
+  actionDetail String   @db.Text
+  sourceModule String   @db.VarChar(50)
+  description  String?  @db.Text
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("activity_logs")
+}
+
+model Profiles {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  fullName  String?  @db.VarChar(100)
+  avatarUrl String?  @db.Text
+  phone     String?  @db.VarChar(20)
+  bio       String?  @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("profiles")
+}

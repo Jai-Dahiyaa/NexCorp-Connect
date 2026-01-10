@@ -1,7 +1,7 @@
 import catchAsync from '../../utils/catchAsync.js';
 import AppError from '../../utils/appError.js';
 import userForgetPasswordService from '../../services/auth/forgetPassword.service.js';
-import sendTestEmail from '../../utils/email.js';
+import sendForgetPasswordEmai from '../../utils/email.js';
 import redisClient from '../../config/redis.js';
 import { generateOTP } from '../../utils/otpGenerate.js';
 import bcrypt from 'bcrypt';
@@ -24,7 +24,7 @@ const forgetUserPasswordController = catchAsync(async (req, res) => {
 
   const hashOTP = await bcrypt.hash(verifyOTP, 10);
 
-  await sendTestEmail(email, 'Forget PASSWORD', verifyOTP);
+  await sendForgetPasswordEmai(email, 'Forget PASSWORD', verifyOTP);
 
   await redisClient.set(`otp:reset-pass:${email}`, hashOTP, { EX: 300 });
 

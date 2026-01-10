@@ -9,6 +9,7 @@ import { swaggerUi, swaggerSpec } from './config/swagger.js';
 import errorMiddleware from './middleware/error.middleware.js';
 import Routes from './routes/index.js';
 import cookieParser from 'cookie-parser';
+import { connectCloudinary } from './config/cloudinary.js'; 
 
 dotenv.config();
 
@@ -22,6 +23,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(errorMiddleware);
 app.use(cookieParser())
 Routes(app)
+
+connectCloudinary();
 
 app.get('/', (req, res) => {
   res.send('<h1>Server is running</h1>');

@@ -5,7 +5,7 @@ import loginOTPService from '../../services/auth/loginOTP.service.js';
 import * as userModels from '../../models/users.models.js';
 import { generateOTP } from '../../utils/otpGenerate.js';
 import redisClient from '../../config/redis.js';
-import sendTestEmail from '../../utils/email.js';
+import sendLoginOtpEmail from '../../utils/email.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -18,7 +18,7 @@ const loginOTPController = catchAsync(async (req, res) => {
 
   const loginOtp = generateOTP();
 
-  await sendTestEmail(email, 'Login OTP', loginOtp);
+  await sendLoginOtpEmail(email, 'Login OTP', loginOtp);
 
   await redisClient.set(`otp:loginOTP:${email}`, loginOtp, { EX: 300 });
 

@@ -13,7 +13,7 @@ const oauthServiceFunction = async (profile) => {
   const email = profile.emails?.[0]?.value || null;
   const photo = profile.photos?.[0]?.value || null;
 
-  if ((!platform || !id || !name || !email || !photo))
+  if (!platform || !id || !name || !email || !photo)
     throw new AppError('Not provide Perfect user detail', 400);
 
   const userData = {
@@ -27,7 +27,6 @@ const oauthServiceFunction = async (profile) => {
   const findUser = await usersModels.findByEmail(userData.email);
 
   if (findUser) {
-
     const updateUsers = await socialLogin.updateSocialLogin(
       userData.platform,
       userData.platformId,
@@ -35,12 +34,13 @@ const oauthServiceFunction = async (profile) => {
     );
 
     return { message: 'Welcome Back', user: findUser, social: updateUsers };
+    
     // throw new AppError('User Already Register', 409);
   } else {
     const insertUserSocialData = await usersModels.oauthLoginSocial(userData.email);
 
     const authUserData = {
-      id: insertUserSocailData.id,
+      id: insertUserSocialData.id,
       email: insertUserSocialData.email,
     };
 
@@ -49,7 +49,7 @@ const oauthServiceFunction = async (profile) => {
     const socialLoginDB = await socialLogin.socialLogin(
       authUserData.id,
       userData.platform,
-      platformIdHash 
+      platformIdHash
     );
 
     const profileUpdate = await profileInserData(userData.name, userData.photo, authUserData.id);
@@ -59,7 +59,7 @@ const oauthServiceFunction = async (profile) => {
 
     return {
       message: `user register successfully`,
-      user: insertUserSocialData,
+      user: insertUserSocialData.email,
       social: socialLoginDB,
       profile: profileUpdate,
     };

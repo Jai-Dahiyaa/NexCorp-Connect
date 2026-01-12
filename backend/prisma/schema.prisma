@@ -7,10 +7,10 @@ datasource db {
 }
 
 model User {
-  id        int      @id @default(autoincrement())
-  email     string   @unique @db.VarChar(50)
-  password  string   @db.VarChar(100)
-  role      string   @db.VarChar(50)
+  id        Int      @id @default(autoincrement())
+  email     String   @unique @db.VarChar(50)
+  password  String   @db.VarChar(100)
+  role      String   @db.VarChar(50)
   status    Boolean  @default(false)
   created_at DateTime @default(now())
 
@@ -21,10 +21,10 @@ model User {
 }
 
 model Social_login {
-  id        int      @id @default(autoincrement())
-  user_id   int
-  platform_name string? @db.VarChar(100) @default(null)
-  platform_user_id string? @db.VarChar(100) @default(null)
+  id        Int      @id @default(autoincrement())
+  user_id   Int
+  platform_name String? @db.VarChar(100) @default(null)
+  platform_user_id String? @db.VarChar(100) @default(null)
   created_at DateTime @default(now())
 
   user User @relation(fields: [user_id], references: [id])
@@ -33,20 +33,20 @@ model Social_login {
 }
 
 model Profiles {
-  id         int      @id @default(autoincrement())
-  user_id    int
-  full_name  string   @db.VarChar(100)
-  avatar_url string?   @db.Text
-  bio        string?   @db.Text
-  phone      string?   @db.VarChar(20)
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  full_name  String   @db.VarChar(100)
+  avatar_url String?  @db.Text
+  bio        String?  @db.Text
+  phone      String?  @db.VarChar(20)
   manual_name_set    Boolean   @default(false)
-  manual_image_set    Boolean   @default(false)
+  manual_image_set   Boolean   @default(false)
   updated_at DateTime @default(now())
-  status     string   @db.VarChar(20) @default('active')
-  profile_source   string   @db.VarChar(20) @default('direct_signup')
-  gender   db.VarChar(20) 
-  dob    DateTime?
-  created_at DateTime @default(now())
+  status          String @db.VarChar(20) @default("active")
+  profile_source  String @db.VarChar(20) @default("direct_signup")
+  gender          String @db.VarChar(20)
+  dob             DateTime?
+  created_at      DateTime @default(now())
 
   user User @relation(fields: [user_id], references: [id])
 

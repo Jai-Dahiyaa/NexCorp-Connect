@@ -23,8 +23,8 @@ model User {
 model Social_login {
   id        Int      @id @default(autoincrement())
   user_id   Int
-  platform_name String? @db.VarChar(100) @default(null)
-  platform_user_id String? @db.VarChar(100) @default(null)
+  platform_name String? @db.VarChar(100)
+  platform_user_id String? @db.VarChar(100)
   created_at DateTime @default(now())
 
   user User @relation(fields: [user_id], references: [id])

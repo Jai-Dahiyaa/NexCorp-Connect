@@ -7,17 +7,17 @@
     "test": "test"
   },
   "scripts": {
-    "reset:test": "cross-env NODE_ENV=test npx prisma migrate reset --force --skip-seed", 
-    "migrate:test": "cross-env NODE_ENV=test npx prisma migrate deploy", 
-    "test": "npm run reset:test && npm run migrate:test && cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest",
-    "test:watch": "jest --watch",
+    "reset:test": "cross-env NODE_ENV=test dotenv -e .env.test -- npx prisma migrate reset --force", 
+    "migrate:test": "cross-env NODE_ENV=test dotenv -e .env.test -- npx prisma migrate deploy", 
+    "test": "npm run reset:test && cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test -- jest", 
+    "test:watch": "cross-env NODE_ENV=test dotenv -e .env.test -- jest --watch",
     "start": "node src/index.js",
     "dev": "nodemon src/index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Jai Dahiya",
   "license": "ISC",
-  "description": "",
+  "description": "This is SkillBridge Project My First project in this project only one difference is this project do everythink.",
   "dependencies": {
     "@prisma/client": "^7.1.0",
     "bcrypt": "^6.0.0",

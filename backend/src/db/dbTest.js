@@ -5,11 +5,7 @@ import logger from '../config/logger.js';
 dotenv.config({ path: '.env.test' });
 
 const testPool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_DATABASE, 
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
+  connectionString: process.env.DATABASE_URL
 });
 
 testPool.connect((err) => {

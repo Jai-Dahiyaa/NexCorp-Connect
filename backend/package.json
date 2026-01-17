@@ -6,31 +6,28 @@
   "directories": {
     "test": "test"
   },
- "scripts": {
-  "reset:test": "cross-env NODE_ENV=test dotenv -e .env.test -- npx prisma migrate reset --force",
-  "migrate:test": "cross-env NODE_ENV=test dotenv -e .env.test -- npx prisma migrate deploy",
-  "test": "npm run reset:test && npm run migrate:test && cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test -- jest",
-  "test:watch": "cross-env NODE_ENV=test dotenv -e .env.test -- jest --watch",
-
-  "start": "node src/index.js",
-
-  "dev:win": "dotenv -e .env -- nodemon src/index.js",
-
-  "reset:linux": "cross-env NODE_ENV=development env-cmd -f .env.linux npx prisma migrate reset --force",
-  "migrate:linux": "cross-env NODE_ENV=development env-cmd -f .env.linux npx prisma migrate deploy",
-  "dev:linux": "npm run reset:linux && npm run migrate:linux && env-cmd -f .env.linux nodemon src/index.js",
-
-  "reset:test:linux": "cross-env NODE_ENV=test env-cmd -f .env.linux.test npx prisma migrate reset --force",
-  "migrate:test:linux": "cross-env NODE_ENV=test env-cmd -f .env.linux.test npx prisma migrate deploy",
-  "test:linux": "npm run reset:test:linux && npm run migrate:test:linux && cross-env NODE_ENV=test env-cmd -f .env.linux.test jest",
-  "test:watch:linux": "cross-env NODE_ENV=test env-cmd -f .env.linux.test jest --watch"
-},
+  "scripts": {
+    "build": "tsc",
+    "reset:test": "cross-env NODE_ENV=test dotenv -e .env.test -- npx prisma migrate reset --force",
+    "migrate:test": "cross-env NODE_ENV=test dotenv -e .env.test -- npx prisma migrate deploy",
+    "test": "npm run reset:test && npm run migrate:test && cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test -- jest",
+    "test:watch": "cross-env NODE_ENV=test dotenv -e .env.test -- jest --watch",
+    "start": "node src/index.js",
+    "dev:win": "dotenv -e .env -- nodemon src/index.js",
+    "reset:linux": "NODE_ENV=development npx prisma migrate reset --force",
+    "migrate:linux": "NODE_ENV=development npx prisma migrate dev",
+    "dev:linux": "dotenv -e .env.linux nodemon src/index.js",
+    "reset:test:linux": "cross-env NODE_ENV=test env-cmd -f .env.linux.test npx prisma migrate reset --force",
+    "migrate:test:linux": "cross-env NODE_ENV=test env-cmd -f .env.linux.test npx prisma migrate deploy",
+    "test:linux": "npm run reset:test:linux && npm run migrate:test:linux && cross-env NODE_ENV=test env-cmd -f .env.linux.test jest",
+    "test:watch:linux": "cross-env NODE_ENV=test env-cmd -f .env.linux.test jest --watch"
+  },
   "keywords": [],
   "author": "Jai Dahiya",
   "license": "ISC",
   "description": "This is SkillBridge Project My First project in this project only one difference is this project do everythink.",
   "dependencies": {
-    "@prisma/client": "^7.1.0",
+    "@prisma/client": "^7.2.0",
     "bcrypt": "^6.0.0",
     "bull": "^4.16.5",
     "bullmq": "^5.66.5",
@@ -63,6 +60,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
+    "@types/node": "^25.0.9",
     "cross-env": "^10.1.0",
     "dotenv-cli": "^11.0.0",
     "env-cmd": "^11.0.0",

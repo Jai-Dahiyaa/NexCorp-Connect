@@ -3,7 +3,7 @@ import * as usersModel from '../../models/users.models.js';
 import AppError from '../../utils/appError.js';
 import { generateOTP } from '../../utils/otpGenerate.js';
 import redisClient from '../../config/redis.js';
-import sendTestEmail from '../../utils/email.js';
+import { emailQueue } from '../../jobs/queue/email.queue.js';
 
 export const createUser = async (email, password) => {
   if (!email || !password) throw new AppError('Email and password are required', 400);
@@ -26,5 +26,6 @@ export const createUser = async (email, password) => {
   await redisClient.set(`signup:${email}`, JSON.stringify(passwordHash), { EX: 3000 });
 
   //send OTP to user
-  await sendTestEmail(email, 'Sign Up OTP', verifyOTPGenerate);
+  await emailQueue.add('sendEmail', { to: email, subject: 'Signup OTP', otp: verifyOTPGenerate });
+  console.log("✅ Job pushed to queue");
 };

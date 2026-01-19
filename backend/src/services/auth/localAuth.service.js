@@ -27,5 +27,4 @@ export const createUser = async (email, password) => {
 
   //send OTP to user
   await emailQueue.add('sendEmail', { to: email, subject: 'Signup OTP', otp: verifyOTPGenerate });
-  console.log("✅ Job pushed to queue");
 };

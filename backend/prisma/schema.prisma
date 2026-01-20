@@ -7,10 +7,12 @@ datasource db {
   url = env("DATABASE_URL")
 }
 
+
+
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique @db.VarChar(50)
-  password  String   @db.VarChar(100)
+  password  String?   @db.VarChar(100) @default("null")
   role      String?   @db.VarChar(50) @default("users")
   status    Boolean  @default(false)
   created_at DateTime @default(now())
@@ -45,7 +47,7 @@ model Profiles {
   updated_at DateTime @default(now())
   status          String @db.VarChar(20) @default("active")
   profile_source  String @db.VarChar(20) @default("direct_signup")
-  gender          String @db.VarChar(20)
+  gender          String? @db.VarChar(20) @default("male")
   dob             DateTime?
   created_at      DateTime @default(now())
 

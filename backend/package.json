@@ -19,7 +19,7 @@
     "dev:linux": "dotenv -e .env.linux -- nodemon src/index.js",
     "reset:test:linux": "cross-env NODE_ENV=test env-cmd -f .env.linux.test npx prisma migrate reset --force",
     "migrate:test:linux": "cross-env NODE_ENV=test env-cmd -f .env.linux.test npx prisma migrate deploy",
-    "test:linux": "npm run reset:test:linux && npm run migrate:test:linux && cross-env NODE_ENV=test env-cmd -f .env.linux.test jest",
+    "test:linux": "npm run reset:test:linux && npm run migrate:test:linux && cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules env-cmd -f .env.linux.test jest --config jest.config.mjs",
     "test:watch:linux": "cross-env NODE_ENV=test env-cmd -f .env.linux.test jest --watch"
   },
   "keywords": [],

@@ -1,13 +1,13 @@
 import catchAsync from '../../utils/catchAsync.js';
 import AppError from '../../utils/appError.js';
 import userForgetPasswordService from '../../services/auth/forgetPassword.service.js';
-import sendForgetPasswordEmai from '../../utils/email.js';
 import redisClient from '../../config/redis.js';
 import { generateOTP } from '../../utils/otpGenerate.js';
 import bcrypt from 'bcrypt';
 import * as userModel from '../../models/users.models.js';
 import jwt from 'jsonwebtoken';
 import utilsToken from '../../utils/token.js';
+import { forgetPassEmailOTPQueue } from '../../jobs/queue/email.queue.js';
 
 const forgetUserPasswordController = catchAsync(async (req, res) => {
   const { email } = req.body;
@@ -24,7 +24,7 @@ const forgetUserPasswordController = catchAsync(async (req, res) => {
 
   const hashOTP = await bcrypt.hash(verifyOTP, 10);
 
-  await sendForgetPasswordEmai(email, 'Forget PASSWORD', verifyOTP);
+  await forgetPassEmailOTPQueue.add('Forget OTP email send queue', {to: email, subject: 'Forget PASSWORD', otp: verifyOTP});
 
   await redisClient.set(`otp:reset-pass:${email}`, hashOTP, { EX: 300 });
 
@@ -41,6 +41,9 @@ const forgetPaawordOTPVerify = catchAsync(async (req, res) => {
   const verifyOTP = bcrypt.compare(otp, hashOTP);
 
   if (!verifyOTP) throw new AppError('OTP is invalid please try again', 403);
+
+  await redisClient.del(redisKey);
+  await redisClient.del(`otp:forgetPass:${email}`)
 
   const payload = {
     email: email,
@@ -82,6 +85,8 @@ const resetNewUserPassword = catchAsync(async (req, res) => {
   if(decode.email !== redisEmail) throw new AppError('email is not match please try again', 403);
 
   await userForgetPasswordService(redisEmail, pass1);
+
+  await redisClient.del(redisKey)
   
   // res.clearCookie('reset-session', {
   //   httpOnly: true,

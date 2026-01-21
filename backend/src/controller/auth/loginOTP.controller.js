@@ -5,7 +5,7 @@ import loginOTPService from '../../services/auth/loginOTP.service.js';
 import * as userModels from '../../models/users.models.js';
 import { generateOTP } from '../../utils/otpGenerate.js';
 import redisClient from '../../config/redis.js';
-import sendLoginOtpEmail from '../../utils/email.js';
+import { loginOTPQueue } from '../../jobs/queue/email.queue.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -18,7 +18,7 @@ const loginOTPController = catchAsync(async (req, res) => {
 
   const loginOtp = generateOTP();
 
-  await sendLoginOtpEmail(email, 'Login OTP', loginOtp);
+  await loginOTPQueue.add('Login Otp send on email', {to: email, subject: 'Login OTP', otpCode: loginOtp});
 
   await redisClient.set(`otp:loginOTP:${email}`, loginOtp, { EX: 300 });
 
@@ -70,6 +70,9 @@ const loginOTPuserVerify = catchAsync(async (req, res) => {
   if (!redisGetOTP && !otp) throw new AppError('Invalied OTP', 403);
 
   const users = await loginOTPService(redisGetTokenEmail);
+
+  await redisClient.del(redisOTPKey); 
+  await redisClient.del(redisTokenKey);
 
   const payload = {
     id: users.id,

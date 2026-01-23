@@ -50,6 +50,15 @@ model Profiles {
   gender          String? @db.VarChar(20) @default("male")
   dob             DateTime?
   created_at      DateTime @default(now())
+  access_level    String? @default("null")
+  company_name    String? @default("null")
+  industry        String? @default("null")
+  description     String? @default("null")
+  department      String? @default("null")
+  experience_year Int? @default(0)
+  course          String @default("null")
+  year            Int? @default(0)
+  college_name    String? @default("null")
 
   user User @relation(fields: [user_id], references: [id])
 

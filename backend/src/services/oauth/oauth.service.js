@@ -10,11 +10,12 @@ const oauthServiceFunction = async (profile) => {
   const platform = profile.provider;
   const id = profile.id;
   const name = profile.displayName || profile.username || 'NoName';
-  const email = profile.emails?.[0]?.value || null;
-  const photo = profile.photos?.[0]?.value || null;
+  const email = profile.emails?.[0]?.value || profile.email || null;
+  const photo = profile.photos?.[0]?.value || profile.avatar_url || null;
 
-  if (!platform || !id || !name || !email || !photo)
-    throw new AppError('Not provide Perfect user detail', 400);
+  if (!platform || !id || !email) {
+    throw new AppError('Essential user detail missing', 400);
+  }
 
   const userData = {
     platform,
@@ -34,7 +35,7 @@ const oauthServiceFunction = async (profile) => {
     );
 
     return { message: 'Welcome Back', user: findUser, social: updateUsers };
-    
+
     // throw new AppError('User Already Register', 409);
   } else {
     const insertUserSocialData = await usersModels.oauthLoginSocial(userData.email);
@@ -60,8 +61,9 @@ const oauthServiceFunction = async (profile) => {
     return {
       message: `user register successfully`,
       user: insertUserSocialData.email,
-      social: socialLoginDB,
+      social: userData.platform,
       profile: profileUpdate,
+      socialLoginDB,
     };
   }
 };

@@ -38,7 +38,7 @@ model Social_login {
 model Profiles {
   id         Int      @id @default(autoincrement())
   user_id    Int
-  full_name  String   @db.VarChar(100)
+  full_name  String   @db.VarChar(100) @default("null")
   avatar_url String?  @db.Text
   bio        String?  @db.Text
   phone      String?  @db.VarChar(20)

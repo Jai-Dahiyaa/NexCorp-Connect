@@ -9,3 +9,11 @@
 -Learn Socket.io how to config and how work
 -Socket.io use for message and notification service
 -Planing add load balance service in APIs
+
+## 2026-02-02
+- Solved the complete OAuth login flow (find user → check social_login → insert/update → return final object)
+- Finalized token system design (role-based mini token + platform-aware token)
+- Fixed query errors (parameter binding $1 issue, clarified ON CONFLICT / upsert logic)
+- Implemented safe object declaration and key-value update patterns
+- Decided profile overwrite strategy (first-time user → store profile, returning user → only update tokens)
+- Confirmed final architecture (provider_user_id is stable, role assignment handled through internal DB)

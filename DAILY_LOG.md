@@ -19,7 +19,6 @@
 - Confirmed final architecture (provider_user_id is stable, role assignment handled through internal DB)
 
 ## 2026-02-03
-feat(core): completed core flow and extensibility
 - Added Users, Sessions, Social Login modules
 - Implemented Profiles with role-based fields
 - Designed Issues, Status Logs, Comments, Uploads, Notifications

@@ -23,3 +23,10 @@
 - Implemented Profiles with role-based fields
 - Designed Issues, Status Logs, Comments, Uploads, Notifications
 - Established schema relations and middleware role extraction plan
+
+## 2026-02-05
+- Defined Prisma schema for Posts and Uploads tables
+- Established relations: Post ↔ Upload, Post ↔ User (creator + assignee), Upload ↔ User (uploader)
+- Resolved ambiguous relation error with proper relation names
+- Successfully ran migration without issues
+- Created model files for Post and Upload in project structure

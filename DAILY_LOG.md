@@ -30,3 +30,28 @@
 - Resolved ambiguous relation error with proper relation names
 - Successfully ran migration without issues
 - Created model files for Post and Upload in project structure
+
+# DAILY_LOG - 06 Feb 2026
+
+## Work Done
+- Implemented **Normal Post Create API** with Cloudinary integration.
+- Multer configured with **diskStorage** to get file path.
+- Cloudinary direct upload function added (path-based).
+- Successfully inserted post data into DB with image URL.
+- Validated request body fields for completeness.
+- Discussed and planned **role-based posts** (Normal, Announcement, Project).
+- Clarified flow for **Delete/Edit APIs** using post ID from frontend.
+- Prepared roadmap for upcoming services: **Notifications** and **Comments**.
+
+## Output Example
+```json
+{
+  "message": "User post successfully create",
+  "postInsert": {
+    "id": 10,
+    "title": "final post create",
+    "description": "final description",
+    "type": "normal",
+    "image": "https://res.cloudinary.com/.../post%20image/qquqo50haxquj4mmk0ol.jpg"
+  }
+}

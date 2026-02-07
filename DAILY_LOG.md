@@ -32,7 +32,6 @@
 - Created model files for Post and Upload in project structure
 
 # DAILY_LOG - 06 Feb 2026
-
 ## Work Done
 - Implemented **Normal Post Create API** with Cloudinary integration.
 - Multer configured with **diskStorage** to get file path.
@@ -55,3 +54,25 @@
     "image": "https://res.cloudinary.com/.../post%20image/qquqo50haxquj4mmk0ol.jpg"
   }
 }
+
+# DAILY_LOG - 07 Feb 2026
+## Completed
+- Added **Edit Post API** to the project.
+- Refined controller and service logic:
+- Removed unnecessary checks, kept only essential flow.
+- Implemented token verification and selective field updates.
+- Integrated Cloudinary for image upload in edit flow.
+- Tested with token and confirmed updates:
+- Single field update works.
+- Multiple field updates work.
+- Unchanged fields retain old values.
+- Response object structured cleanly:
+  ```json
+  {
+    "id": 11,
+    "image": "https://res.cloudinary.com/...jpg",
+    "title": "code refine",
+    "description": "Code refine with rrs",
+    "type": "normal"
+  }
+

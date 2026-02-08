@@ -57,7 +57,7 @@
 
 # DAILY_LOG - 07 Feb 2026
 ## Completed
-- Added **Edit Post API** to the project.
+- Added **Post API** to the project.
 - Refined controller and service logic:
 - Removed unnecessary checks, kept only essential flow.
 - Implemented token verification and selective field updates.
@@ -67,6 +67,8 @@
 - Multiple field updates work.
 - Unchanged fields retain old values.
 - Response object structured cleanly:
+
+## Output Example
   ```json
   {
     "id": 11,
@@ -76,3 +78,18 @@
     "type": "normal"
   }
 
+# Daily Log – 9 Feb 2026 (Planned)
+
+## 🎯 Planned Tasks
+- **Notification Service**
+  - Design and finalize notifications table schema.
+  - Implement insertNotification function (triggered on post create/edit/delete).
+  - Build fetchNotifications API (GET /notifications).
+  - Build markAsRead API (PATCH /notifications/:id).
+  - Integrate BullMQ queue for async notification insert.
+  - Plan Socket.IO integration for real-time push.
+
+## 📝 Notes
+- Focus on notification service first before comments.
+- Ensure schema supports all post types (normal, announcement, project).
+- Keep response structure consistent with posts API.

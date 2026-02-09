@@ -80,7 +80,7 @@
 
 # Daily Log – 9 Feb 2026 (Planned)
 
-## 🎯 Planned Tasks
+## Planned Tasks
 - **Notification Service**
   - Design and finalize notifications table schema.
   - Implement insertNotification function (triggered on post create/edit/delete).
@@ -89,7 +89,17 @@
   - Integrate BullMQ queue for async notification insert.
   - Plan Socket.IO integration for real-time push.
 
-## 📝 Notes
+## Notes
 - Focus on notification service first before comments.
 - Ensure schema supports all post types (normal, announcement, project).
 - Keep response structure consistent with posts API.
+
+
+# Daily Log - 9 Feb 2026
+- Added Notification model in Prisma schema with relation to Post
+- Migrated schema to database
+- Updated DB config to use DATABASE_URL for universal connection
+- Fixed worker env loading issue by running from project root
+- Worker now connects to DB and processes jobs
+- Identified foreign key violation on postId when post is deleted
+- Next step: adjust relation strategy (Cascade/SetNull) to handle deletes

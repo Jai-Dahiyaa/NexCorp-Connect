@@ -20,7 +20,8 @@
     "reset:test:linux": "cross-env NODE_ENV=test env-cmd -f .env.linux.test npx prisma migrate reset --force",
     "migrate:test:linux": "cross-env NODE_ENV=test env-cmd -f .env.linux.test npx prisma migrate deploy",
     "test:linux": "npm run reset:test:linux && npm run migrate:test:linux && cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules env-cmd -f .env.linux.test jest --config jest.config.mjs",
-    "test:watch:linux": "cross-env NODE_ENV=test env-cmd -f .env.linux.test jest --watch"
+    "test:watch:linux": "cross-env NODE_ENV=test env-cmd -f .env.linux.test jest --watch",
+    "worker": "node src/jobs/workers/post.worker.js"
   },
   "keywords": [],
   "author": "Jai Dahiya",
@@ -53,6 +54,8 @@
     "passport-linkedin-oauth2": "^2.0.0",
     "pg": "^8.16.3",
     "redis": "^5.8.2",
+    "socket.io": "^4.8.3",
+    "socket.io-client": "^4.8.3",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
     "winston": "^3.17.0",

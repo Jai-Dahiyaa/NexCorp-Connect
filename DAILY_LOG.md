@@ -103,3 +103,11 @@
 - Worker now connects to DB and processes jobs
 - Identified foreign key violation on postId when post is deleted
 - Next step: adjust relation strategy (Cascade/SetNull) to handle deletes
+
+
+# Daily Log - 10 Feb 2026
+- Configured socket.io with proper connection and join handling
+- Fixed server initialization (single config source of truth)
+- Worker restricted to DB insert only, emit handled in controller
+- Verified notification delivery with test client
+- Cleaned architecture for scalable notification pipeline

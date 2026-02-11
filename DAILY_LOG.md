@@ -111,3 +111,10 @@
 - Worker restricted to DB insert only, emit handled in controller
 - Verified notification delivery with test client
 - Cleaned architecture for scalable notification pipeline
+
+# Daily Log - 11 Feb 2026
+-Finalized Prisma schema for comments table with foreign keys (postId → posts.  id, userId → users.id) and cascade delete
+-Added indexing on postId for optimized comment fetch queries
+-Structured three core APIs for comment system: Insert (POST), Select (GET), Delete (DELETE)
+-Defined query flow for each API using Prisma (create, findMany, delete)
+-Prepared architecture for integrating notification system with comment events (similar to delete case with BullMQ + socket emit)

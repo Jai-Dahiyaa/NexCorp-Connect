@@ -118,3 +118,16 @@
 -Structured three core APIs for comment system: Insert (POST), Select (GET), Delete (DELETE)
 -Defined query flow for each API using Prisma (create, findMany, delete)
 -Prepared architecture for integrating notification system with comment events (similar to delete case with BullMQ + socket emit)
+
+# Daily Log – 12 Feb 2026
+-Implemented Prisma schema for comments table with foreign keys (postId → posts.id, userId → users.id) and cascade delete.
+-Built three core APIs for comment system:
+# Create (POST /comments)
+# Fetch (GET /comments/post/:id)
+# Delete (DELETE /comments/:id)
+
+-Structured controller + service layer separation for clean architecture.
+-Integrated centralized error handling using AppError + middleware, returning JSON format with statusCode, message, timestamp.
+-Debugged issue with req.user.id being undefined → fixed by attaching decoded token in middleware.
+-Verified that res.rows returns array of comments, not just rows[0].
+-Prepared architecture for future notification system integration (BullMQ + Socket.IO emit on comment events).

@@ -131,3 +131,10 @@
 -Debugged issue with req.user.id being undefined → fixed by attaching decoded token in middleware.
 -Verified that res.rows returns array of comments, not just rows[0].
 -Prepared architecture for future notification system integration (BullMQ + Socket.IO emit on comment events).
+
+# Daily Log - 13 Feb 2026
+- Added Interest table schema with post-user relation
+- Implemented announcement create & status update APIs
+- Implemented project create, assign user, and status workflow
+- Integrated Interest table for project participants
+- Updated queries with ownership checks and clean response handling

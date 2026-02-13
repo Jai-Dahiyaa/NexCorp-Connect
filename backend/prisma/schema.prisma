@@ -17,16 +17,26 @@ model User {
   social_login Social_login[]
   profiles Profiles[]
   sessions Sessions[]
+  createdPosts  Post[]   @relation("CreatedPosts")
+  assignedPosts Post[]   @relation("AssignedPosts")
+  uploads Upload[]
+  notification Notification[]
+  comment Comment[]
+  interest Interest[]
 
   @@map("users")
 }
 
 model Social_login {
-  id        Int      @id @default(autoincrement())
-  user_id   Int
-  platform_name String? @db.VarChar(100)
-  platform_user_id String? @db.VarChar(100)
-  created_at DateTime @default(now())
+  id               Int      @id @default(autoincrement())
+  user_id          Int
+  provider         String 
+  provider_user_id String   @unique
+  access_token     String?
+  refresh_token    String?  
+  expires_at       DateTime?
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt @default(now())
 
   user User @relation(fields: [user_id], references: [id])
 
@@ -39,7 +49,7 @@ model Profiles {
   full_name  String   @db.VarChar(100) @default("null")
   avatar_url String?  @db.Text
   bio        String?  @db.Text
-  phone      String?  @db.VarChar(20)
+  phone      String?  @db.VarChar(20)  @unique
   manual_name_set    Boolean   @default(false)
   manual_image_set   Boolean   @default(false)
   updated_at DateTime @default(now())
@@ -75,4 +85,81 @@ model Sessions {
   user User @relation(fields: [user_id], references: [id])
 
   @@map("sessions")
+}
+
+model Post {
+  id                 Int       @id @default(autoincrement())
+  createdByUserId    Int       
+  assignedToUserId   Int?      
+  title              String
+  description        String
+  type               String    
+  isDeleted          Boolean   @default(false)
+  status             String?   @default("open")
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  creator      User    @relation("CreatedPosts", fields: [createdByUserId], references: [id])
+  assignedUser User?   @relation("AssignedPosts", fields: [assignedToUserId], references: [id])
+  upload Upload[]
+  notification Notification[]
+  comment Comment[]
+  interest Interest[]
+  
+  @@map("posts")
+}
+
+model Interest {
+  id        Int      @id @default(autoincrement())
+  postId    Int
+  userId    Int
+  createdAt DateTime @default(now())
+
+  post Post @relation(fields: [postId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([postId, userId]) 
+  @@map("interests")
+}
+
+model Upload {
+  id                 Int       @id @default(autoincrement())
+  postId             Int       
+  fileUrl            String    
+  uploadedByUserId   Int       
+  cloudPath          String?   
+  createdAt          DateTime  @default(now())
+
+  post               Post      @relation(fields: [postId], references: [id])
+  user               User      @relation(fields: [uploadedByUserId], references: [id])
+
+  @@map("uploads")
+}
+
+model Notification {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  postId     Int
+  actionType String
+  message    String
+  status     String   @default("unread")
+  created_at DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  post Post @relation(fields: [postId], references: [id])
+
+  @@map("notifications")
+}
+
+model Comment {
+  id       Int     @id @default(autoincrement())
+  postId   Int
+  userId   Int
+  content  String
+  created_at  DateTime @default(now())
+
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("comments")
 }

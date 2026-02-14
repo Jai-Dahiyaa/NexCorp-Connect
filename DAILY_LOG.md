@@ -198,6 +198,32 @@ Tech Stack: Node.js, Express.js, Prisma ORM, PostgreSQL, Socket.IO, BullMQ, Clou
 
 ---
 
+## 2026-02-14
+
+### Project Post Creation (Role-Based Access)
+
+- Implemented Project Post Create API.
+- Developed dedicated service layer for project creation logic.
+- Built controller function to handle request validation and response structure.
+- Added role-based access control:
+  - Only Admin and Company roles are allowed to create project posts.
+- Created custom role-check middleware function.
+- Integrated middleware into route to enforce authorization.
+- Ensured clean separation of concerns:
+  - Controller → request/response handling
+  - Service → business logic
+  - Middleware → role validation
+- Validated request body and ensured proper error handling for unauthorized access.
+- Structured consistent JSON response format for successful project creation.
+- Maintained scalability for future role expansion.
+
+### Architecture Improvements
+
+- Strengthened RBAC (Role-Based Access Control) implementation.
+- Improved modular structure for better maintainability.
+- Ensured secure project creation flow aligned with system permissions.
+
+
 # Architectural Highlights
 
 - Layered architecture (Controller → Service → Database)

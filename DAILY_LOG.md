@@ -217,6 +217,44 @@ Tech Stack: Node.js, Express.js, Prisma ORM, PostgreSQL, Socket.IO, BullMQ, Clou
 - Structured consistent JSON response format for successful project creation.
 - Maintained scalability for future role expansion.
 
+## 2026-02-15
+
+### API Documentation with Swagger
+
+- Integrated Swagger for complete API documentation.
+- Documented all existing endpoints with:
+  - Route path
+  - HTTP method
+  - Request body schema
+  - Query parameters
+  - Path parameters
+  - Response structure
+  - Status codes
+- Structured tags for modular clarity (Auth, Posts, Projects, Comments, Notifications).
+- Added example request and response payloads.
+- Improved API readability and testing workflow.
+- Verified Swagger UI rendering and endpoint validation.
+
+### Security & Architecture Review
+
+- Identified potential vulnerability areas in:
+  - Role-based access control enforcement.
+  - Request body validation gaps.
+  - Unauthorized access edge cases.
+- Reviewed middleware flow to ensure:
+  - Proper token verification
+  - Role validation before service execution
+- Marked improvement areas for:
+  - Input sanitization
+  - Error message standardization
+  - Better status code usage
+
+### Improvements in Codebase
+
+- Strengthened API structure consistency.
+- Improved route-level authorization clarity.
+- Enhanced documentation for maintainability and onboarding.
+
 ### Architecture Improvements
 
 - Strengthened RBAC (Role-Based Access Control) implementation.

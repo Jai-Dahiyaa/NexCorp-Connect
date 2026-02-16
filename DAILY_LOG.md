@@ -262,6 +262,38 @@ Tech Stack: Node.js, Express.js, Prisma ORM, PostgreSQL, Socket.IO, BullMQ, Clou
 - Ensured secure project creation flow aligned with system permissions.
 
 
+## 2026-02-16
+
+### API Security & Response Structure Improvement
+
+- Planned implementation to hash database ID before sending it in API responses.
+- Decided to avoid exposing raw database IDs to the client side.
+- Researched secure hashing approaches for masking identifiers.
+- Designed strategy to integrate hashed ID transformation inside response layer.
+
+- Planned and prepared to implement rate limiting middleware.
+- Target: Prevent brute force attacks and API abuse.
+- Decided to apply rate limiting at route level for sensitive endpoints.
+- Ensured middleware-based scalable approach for future security extensions.
+
+- Improved API response structure standardization.
+- Added `status` field in successful responses.
+- Defined consistent JSON format for both success and error cases.
+- Ensured cleaner controller-level response handling.
+
+- Studied basic website attack concepts:
+  - SQL Injection
+  - XSS (Cross-Site Scripting)
+  - Brute Force Attacks
+  - Basic Denial-of-Service patterns
+- Identified backend security improvement areas based on attack study.
+- Planned to strengthen validation and protection mechanisms accordingly.
+
+- Focused on production-level backend mindset.
+- Emphasized clean architecture and scalable security practices.
+
+
+
 # Architectural Highlights
 
 - Layered architecture (Controller → Service → Database)

@@ -292,7 +292,41 @@ Tech Stack: Node.js, Express.js, Prisma ORM, PostgreSQL, Socket.IO, BullMQ, Clou
 - Focused on production-level backend mindset.
 - Emphasized clean architecture and scalable security practices.
 
+## 2026-02-17
 
+### Database Security, UUID Strategy & Injection Prevention
+
+- Studied why exposing incremental database IDs can create security risks.
+- Decided to prefer UUID instead of auto-increment integer IDs in PostgreSQL.
+- Understood that UUIDs are non-predictable and safer for public APIs.
+- Researched advantages of UUID in distributed and microservice-based systems.
+- Planned to use UUID as primary key with default generation at database level.
+
+- Explored PostgreSQL UUID extension setup.
+- Reviewed how to enable `uuid-ossp` extension.
+- Designed table structure using UUID as PRIMARY KEY.
+- Ensured future scalability and uniqueness across services.
+
+- Deeply studied SQL Injection attack mechanism.
+- Understood how raw string concatenation in queries creates vulnerability.
+- Reviewed real-world injection examples and exploitation patterns.
+- Identified high-risk areas in login and search queries.
+- Planned strict use of parameterized queries and prepared statements.
+- Decided to enforce validation layer before database interaction.
+
+- Studied rate limiting concepts for API protection.
+- Learned different algorithms:
+  - Fixed Window
+  - Sliding Window
+  - Token Bucket
+- Planned middleware-based rate limiting implementation.
+- Target: Protect authentication and sensitive endpoints.
+- Ensured scalable design for future Redis-based distributed rate limiting.
+
+- Strengthened backend security mindset.
+- Focused on secure-by-default architecture decisions.
+- Emphasized production-level thinking instead of only feature implementation.
+- Improved understanding of how small security decisions impact system safety.
 
 # Architectural Highlights
 

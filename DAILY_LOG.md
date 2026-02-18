@@ -328,6 +328,21 @@ Tech Stack: Node.js, Express.js, Prisma ORM, PostgreSQL, Socket.IO, BullMQ, Clou
 - Emphasized production-level thinking instead of only feature implementation.
 - Improved understanding of how small security decisions impact system safety.
 
+## 2026-02-18
+
+### AppError Refactor & Cloudinary Upload Implementation
+
+- Refactored AppError utility file structure.
+- Simplified constructor and improved error handling design.
+- Cleaned up unnecessary code for better maintainability.
+
+- Implemented path-wise image upload in Cloudinary.
+- Added dynamic folder structure support.
+- Improved organization and reusability of upload utility.
+
+- Maintained structured commit format (REFECTOR, FEAT).
+- Focused on clean and scalable backend architecture.
+
 # Architectural Highlights
 
 - Layered architecture (Controller → Service → Database)

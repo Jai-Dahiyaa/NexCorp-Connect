@@ -6,7 +6,7 @@ export const uploadImageFromUrl = async (imageUrl, folderName = 'uploads') => {
     const result = await cloudinary.uploader.upload(imageUrl, {
       folder: folderName,
     });
-    return result.secure_url; 
+    return result.secure_url;
   } catch (error) {
     console.error('Cloudinary upload error:', error);
     throw error;
@@ -23,11 +23,20 @@ export const uploadBufferImage = (fileBuffer, folderName = 'uploads') => {
         if (error) {
           reject(error);
         } else {
-          resolve(result.secure_url); 
+          resolve(result.secure_url);
         }
       }
     );
 
     stream.end(fileBuffer);
   });
+};
+
+export const uploadFileToCloudinary = async (filePath, folderName = "posts") => {
+  try {
+    const cloudinary = connectCloudinary();
+    const result = await cloudinary.uploader.upload(filePath, { folder: folderName, }); return result.secure_url;
+  } catch (err) {
+    console.error("Cloudinary Upload Error:", err); throw err;
+  }
 };

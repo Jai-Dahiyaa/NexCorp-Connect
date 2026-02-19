@@ -2,23 +2,21 @@ import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as GitHubStrategy } from 'passport-github2';
 
-const commonCallback = async (accessToken, refreshToken, profile, done) => {
+const googleCallback = async (accessToken, refreshToken, profile, done) => {
   try {
-    profile.accessToken = accessToken;
-    profile.provider = profile.provider || 'unknown';
+    const userProfile = {
+      provider: "google",
+      id: profile.id,
+      email: profile.emails?.[0]?.value || null,
+      name: profile.displayName || "NoName",
+      photo: profile.photos?.[0]?.value || null,
+      accessToken,
+      refreshToken
+    };
 
-    if (profile.provider === 'google') {
-      profile.email = profile.emails?.[0]?.value || null;
-      profile.photo = profile.photos?.[0]?.value || null;
-      profile.name = profile.displayName || 'NoName';
-    } else if (profile.provider === 'github') {
-      profile.email = profile.emails?.[0]?.value || profile._json?.email || null;
-      profile.photo = profile._json?.avatar_url || null;
-      profile.name = profile.displayName || profile.username || 'NoName';
-    }
-
-    return done(null, profile);
+    return done(null, userProfile);
   } catch (err) {
+    console.error("Google OAuth Error:", err);
     return done(err, null);
   }
 };
@@ -30,9 +28,28 @@ passport.use(
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: process.env.GOOGLE_CALLBACK_URL,
     },
-    commonCallback
+    googleCallback
   )
 );
+
+const githubCallback = async (accessToken, refreshToken, profile, done) => {
+  try {
+    const userProfile = {
+      provider: "github",
+      id: profile.id,
+      email: profile.emails?.[0]?.value || profile._json?.email || null,
+      name: profile.displayName || profile.username || "NoName",
+      photo: profile._json?.avatar_url || null,
+      accessToken,
+      refreshToken
+    };
+
+    return done(null, userProfile);
+  } catch (err) {
+    console.error("GitHub OAuth Error:", err);
+    return done(err, null);
+  }
+};
 
 passport.use(
   new GitHubStrategy(
@@ -41,7 +58,7 @@ passport.use(
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
       callbackURL: process.env.GITHUB_CALLBACK_URL,
     },
-    commonCallback
+    githubCallback
   )
 );
 

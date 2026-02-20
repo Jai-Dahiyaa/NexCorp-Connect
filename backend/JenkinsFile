@@ -9,12 +9,18 @@ pipeline {
         }
 
         stage('Install Dependencies') {
-            steps {
-                dir('backend') {
-                    sh 'npm ci'
-                }
-            }
+    steps {
+        dir('backend') {
+            sh '''
+            . $HOME/.nvm/nvm.sh
+            nvm install 20
+            nvm use 20
+            npm ci
+            '''
         }
+    }
+}
+
 
         stage('Run App with Env') {
             steps {

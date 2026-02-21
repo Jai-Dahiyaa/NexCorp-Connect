@@ -343,6 +343,25 @@ Tech Stack: Node.js, Express.js, Prisma ORM, PostgreSQL, Socket.IO, BullMQ, Clou
 - Maintained structured commit format (REFECTOR, FEAT).
 - Focused on clean and scalable backend architecture.
 
+## 2026-02-21  
+
+### Redis Rate Limiting, Cluster Setup & PM2 Integration  
+
+- Implemented Redis-based rate limiting mechanism.  
+- Combined Redis-backed limiter with normal in-memory rate limiting logic.  
+- Optimized request throttling to handle high concurrency efficiently.  
+
+- Manually configured Node.js cluster mode to utilize multi-core CPU architecture.  
+- Improved application scalability and load distribution across worker processes.  
+- Added proper worker restart handling for fault tolerance.  
+
+- Installed and configured PM2 process manager.  
+- Enabled process monitoring and automatic restarts.  
+- Prepared production-ready setup with cluster compatibility.  
+
+- Maintained structured commit format (FEAT, CONFIG).  
+- Focused on backend scalability, performance, and production deployment readiness.
+
 # Architectural Highlights
 
 - Layered architecture (Controller → Service → Database)

@@ -40,7 +40,7 @@ pipeline {
                 ]) {
                     dir('backend') {
                         sh '''
-                        EXPORT PORT=$PORT
+                        export PORT=$PORT
                         export DATABASE_URL=$DATABASE_URL
                         export REDIS_URL=$REDIS_URL
                         export EMAIL_USER=$EMAIL_USER
@@ -60,24 +60,23 @@ pipeline {
                         export CLOUDINARY_API_SECRET=$CLOUDINARY_API_SECRET
 
                         echo "=== Starting Backend Server ==="
-                        npm run dev | tee jenkins-output.log &
-                        sleep 10
+                        npm run dev 
                         '''
                     }
                 }
             }
         }
 
-        stage('Stop Backend Server') {
-            steps {
-                dir('backend') {
-                    sh '''
-                    echo "=== Killing Backend Server ==="
-                    pkill -f "node" || true
-                    '''
-                }
-            }
-        }
+        // stage('Stop Backend Server') {
+        //     steps {
+        //         dir('backend') {
+        //             sh '''
+        //             echo "=== Killing Backend Server ==="
+        //             pkill -f "node" || true
+        //             '''
+        //         }
+        //     }
+        // }
     }
 
     post {

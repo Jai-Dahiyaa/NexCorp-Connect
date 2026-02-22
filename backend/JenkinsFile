@@ -60,12 +60,20 @@ pipeline {
                 echo "=== Starting Backend Server ==="
                 npm run dev | tee jenkins-output.log &
                 sleep 10
-                echo "=== Killing Backend Server ==="
-                pkill -f "node" || true
                 '''
             }
         }
     }
+    stage('Stop Backend Server') { 
+        steps { 
+            dir('backend') { 
+                sh ''' 
+                echo "=== Killing Backend Server ===" 
+                pkill -f "node" || true 
+                ''' 
+                } 
+            } 
+        }
 }
 
     }

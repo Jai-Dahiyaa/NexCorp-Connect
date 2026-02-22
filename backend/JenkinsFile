@@ -16,7 +16,7 @@ pipeline {
             }
         }
 
-        stage('Run App with Env') {
+        stage('Run Backend Server') {
             steps {
                 withCredentials([
                     string(credentialsId: 'DATABASE_URL', variable: 'DATABASE_URL'),
@@ -36,7 +36,7 @@ pipeline {
                     string(credentialsId: 'CLOUDINARY_NAME', variable: 'CLOUDINARY_NAME'),
                     string(credentialsId: 'CLOUDINARY_API_KEY', variable: 'CLOUDINARY_API_KEY'),
                     string(credentialsId: 'CLOUDINARY_API_SECRET', variable: 'CLOUDINARY_API_SECRET'),
-                    string(credentialsId: "PORT", variable: "PORT")
+                    string(credentialsId: 'PORT', variable: 'PORT')
                 ]) {
                     dir('backend') {
                         sh '''
@@ -60,7 +60,9 @@ pipeline {
                         export CLOUDINARY_API_SECRET=$CLOUDINARY_API_SECRET
 
                         echo "=== Starting Backend Server ==="
-                        npm run dev 
+                        npm run dev & 
+                        echo $! > server.pid
+                        sleep 10
                         '''
                     }
                 }
@@ -72,7 +74,8 @@ pipeline {
                 dir('backend') {
                     sh '''
                     echo "=== Killing Backend Server ==="
-                    pkill -f "node" || true
+                    kill $(cat server.pid) || true
+                    rm -f server.pid
                     '''
                 }
             }

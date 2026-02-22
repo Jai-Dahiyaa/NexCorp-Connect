@@ -67,16 +67,16 @@ pipeline {
             }
         }
 
-        // stage('Stop Backend Server') {
-        //     steps {
-        //         dir('backend') {
-        //             sh '''
-        //             echo "=== Killing Backend Server ==="
-        //             pkill -f "node" || true
-        //             '''
-        //         }
-        //     }
-        // }
+        stage('Stop Backend Server') {
+            steps {
+                dir('backend') {
+                    sh '''
+                    echo "=== Killing Backend Server ==="
+                    pkill -f "node" || true
+                    '''
+                }
+            }
+        }
     }
 
     post {

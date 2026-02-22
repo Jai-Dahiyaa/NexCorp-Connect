@@ -35,10 +35,12 @@ pipeline {
                     string(credentialsId: 'REFRESH_EXPIRE', variable: 'REFRESH_EXPIRE'),
                     string(credentialsId: 'CLOUDINARY_NAME', variable: 'CLOUDINARY_NAME'),
                     string(credentialsId: 'CLOUDINARY_API_KEY', variable: 'CLOUDINARY_API_KEY'),
-                    string(credentialsId: 'CLOUDINARY_API_SECRET', variable: 'CLOUDINARY_API_SECRET')
+                    string(credentialsId: 'CLOUDINARY_API_SECRET', variable: 'CLOUDINARY_API_SECRET'),
+                    string(credentialsId: "PORT", variable: "PORT")
                 ]) {
                     dir('backend') {
                         sh '''
+                        EXPORT PORT=$PORT
                         export DATABASE_URL=$DATABASE_URL
                         export REDIS_URL=$REDIS_URL
                         export EMAIL_USER=$EMAIL_USER

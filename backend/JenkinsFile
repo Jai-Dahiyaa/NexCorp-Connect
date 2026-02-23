@@ -36,10 +36,14 @@ pipeline {
                     string(credentialsId: 'CLOUDINARY_NAME', variable: 'CLOUDINARY_NAME'),
                     string(credentialsId: 'CLOUDINARY_API_KEY', variable: 'CLOUDINARY_API_KEY'),
                     string(credentialsId: 'CLOUDINARY_API_SECRET', variable: 'CLOUDINARY_API_SECRET'),
-                    string(credentialsId: 'PORT', variable: 'PORT')
+                    string(credentialsId: 'PORT', variable: 'PORT'),
+                    string(credentialsId: 'QUEUE_CONNECTION', variable: 'QUEUE_CONNECTION'),
+                    string(credentialsId: 'QUEUE_PORT', variable: 'QUEUE_PORT'),
                 ]) {
                     dir('backend') {
                         sh '''
+                        export QUEUE_CONNECTION=$QUEUE_CONNECTION
+                        export QUEUE_PORT=$QUEUE_PORT
                         export PORT=$PORT
                         export DATABASE_URL=$DATABASE_URL
                         export REDIS_URL=$REDIS_URL
@@ -84,10 +88,10 @@ pipeline {
 
     post {
         success {
-            echo "✅ Build successful, server stopped!"
+            echo "Build successful, server stopped!"
         }
         failure {
-            echo "❌ Build failed. Check logs."
+            echo "Build failed. Check logs."
         }
     }
 }

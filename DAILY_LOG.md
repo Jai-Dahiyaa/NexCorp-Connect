@@ -362,6 +362,30 @@ Tech Stack: Node.js, Express.js, Prisma ORM, PostgreSQL, Socket.IO, BullMQ, Clou
 - Maintained structured commit format (FEAT, CONFIG).  
 - Focused on backend scalability, performance, and production deployment readiness.
 
+## 2026-02-25  
+
+### ESLint Setup, Rate Limiting Middleware & Git CLI Practice  
+
+- Configured ESLint with proper Node.js environment and custom rule definitions.  
+- Enforced consistent code style and improved error detection across backend modules.  
+- Resolved linting issues to maintain clean and production-ready codebase.  
+
+- Implemented centralized rate limiting using dedicated middleware.  
+- Applied middleware at application level for API protection.  
+- Maintained clean separation of concerns between routes and middleware layer.  
+
+- Practiced Git command-line workflow in depth.  
+- Improved understanding of staging, branching, rebasing, and commit structuring.  
+- Strengthened version control practices for scalable development.  
+
+- Maintained structured commit format (FEAT, CONFIG, CHORE).  
+- Focused on backend stability, maintainability, and development discipline.  
+
+
+### Commit  
+
+FEAT: implement centralized rate limiting middleware  
+
 # Architectural Highlights
 
 - Layered architecture (Controller → Service → Database)

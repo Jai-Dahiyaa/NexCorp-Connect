@@ -1,28 +1,13 @@
-import js from "@eslint/js";
-import globals from "globals";
-import { defineConfig } from "eslint/config";
-
-export default defineConfig([
+export default [
   {
-    files: ["**/*.{js,mjs,cjs}"],
-    plugins: { js },
-    extends: [
-      "js/recommended",        
-      "airbnb-base",          
-      "prettier"             
-    ],
+    files: ["**/*.js"],
     languageOptions: {
-      globals: {
-        ...globals.node,      
-        ...globals.jest       
-      }
+      ecmaVersion: "latest",
+      sourceType: "module",
     },
     rules: {
-      "no-console": "off",                  
-      "no-unused-vars": ["warn"],          
-      "import/extensions": ["error", "always"],
-      "func-names": "off",                    
-      "no-underscore-dangle": "off"            
-    }
-  }
-]);
+      semi: "error",
+      quotes: ["error", "double"],
+    },
+  },
+];

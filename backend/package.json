@@ -41,7 +41,7 @@
   "license": "ISC",
   "description": "This is SkillBridge Project My First project in this project only one difference is this project do everythink.",
   "dependencies": {
-    "@prisma/client": "^7.3.0",
+    "@prisma/client": "^6.19.2",
     "bcrypt": "^6.0.0",
     "bull": "^4.16.5",
     "bullmq": "^5.66.5",
@@ -79,7 +79,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
-    "@types/node": "^25.0.9",
+    "@types/node": "^20.19.34",
     "cross-env": "^10.1.0",
     "dotenv-cli": "^11.0.0",
     "env-cmd": "^11.0.0",

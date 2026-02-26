@@ -381,10 +381,28 @@ Tech Stack: Node.js, Express.js, Prisma ORM, PostgreSQL, Socket.IO, BullMQ, Clou
 - Maintained structured commit format (FEAT, CONFIG, CHORE).  
 - Focused on backend stability, maintainability, and development discipline.  
 
+## 2026-02-26  
 
-### Commit  
+### Test Database Setup, Prisma Migration Fix & Project Cleanup  
 
-FEAT: implement centralized rate limiting middleware  
+- Diagnosed and resolved Prisma migration permission errors in local test database.  
+- Identified schema-level permission issue (`public` schema) in PostgreSQL.  
+- Switched database context properly before dropping active database.  
+- Recreated test database with correct ownership to ensure migration compatibility.  
+
+- Successfully executed fresh Prisma migration after database reset.  
+- Verified proper schema generation and migration persistence.  
+- Ensured separation between production and test database environments.  
+
+- Removed unnecessary `prisma.config.ts` file to restore default environment variable loading.  
+- Fixed `DATABASE_URL` resolution issue by relying on `.env` configuration.  
+- Cleaned up redundant TypeScript setup (removed `tsconfig.json` from JS-based backend).  
+- Clarified project architecture: Node.js + Express (JavaScript) with Prisma ORM.  
+
+- Strengthened understanding of PostgreSQL roles, schema permissions, and database ownership.  
+- Improved debugging workflow across Prisma, TypeScript, and PostgreSQL layers.  
+- Maintained clean development environment and configuration discipline.  
+
 
 # Architectural Highlights
 

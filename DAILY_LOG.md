@@ -404,6 +404,38 @@ Tech Stack: Node.js, Express.js, Prisma ORM, PostgreSQL, Socket.IO, BullMQ, Clou
 - Maintained clean development environment and configuration discipline.  
 
 
+## 2026-02-27  
+
+### Signup & OTP Verification API Testing + Jest Configuration + DB Environment Handling  
+
+- Implemented test cases for Signup API.  
+- Covered success case (valid user creation).  
+- Covered failure cases (duplicate email, invalid payload validation).  
+- Ensured proper response structure and status code validation.  
+
+- Wrote comprehensive test cases for OTP Verification API.  
+- Validated correct OTP flow.  
+- Tested invalid OTP scenario handling.  
+- Tested expired OTP logic (where applicable).  
+- Verified database state changes after successful verification.  
+
+- Introduced centralized `db/index.js` configuration.  
+- Implemented environment-based database switching logic.  
+- Configured system to use **test database** when running test command.  
+- Ensured main database remains untouched during testing.  
+- Improved isolation between development and testing environments.  
+
+- Configured Jest testing framework.  
+- Set up test environment configuration.  
+- Integrated Jest with project structure.  
+- Ensured proper test execution via npm scripts.  
+- Verified test database connection during test runs.  
+
+- Strengthened understanding of test-driven backend workflow.  
+- Improved API validation and error-handling testing patterns.  
+- Enhanced knowledge of environment-based configuration management.  
+- Maintained clean backend architecture with controlled DB usage during testing.  
+
 # Architectural Highlights
 
 - Layered architecture (Controller → Service → Database)

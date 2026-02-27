@@ -8,8 +8,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "dev": "dotenv -e .env -- nodemon src/index.js",
-    "start": "node src/index.js",
+    "dev": "NODE_ENV=development dotenv -e .env -- nodemon src/index.js",
+    "start": "NODE_ENV=producation src/index.js",
     "reset": "cross-env NODE_ENV=development dotenv -e .env -- npx prisma migrate reset --force",
     "migrate": "cross-env NODE_ENV=development dotenv -e .env -- npx prisma migrate dev",
     "reset:test": "cross-env NODE_ENV=test dotenv -e .env.test -- npx prisma migrate reset --force",

@@ -494,6 +494,23 @@ All test cases written
 All tests passing  
 Module ready for integration  
 
+## 2026-03-01  
+
+### Docker Installation + Docker Compose Setup  
+
+- Installed Docker on the development system.  
+- Verified successful installation using Docker CLI commands.  
+- Ensured Docker service is running properly in the local environment.  
+- Checked Docker version and basic functionality after installation.  
+
+- Installed Docker Compose for managing multi-container applications.  
+- Verified Docker Compose installation using version command.  
+- Understood the role of Docker Compose in defining and running multi-container Docker applications.  
+
+- Gained foundational understanding of containerization concepts.  
+- Learned how Docker helps in creating consistent development environments.  
+- Explored how Docker Compose simplifies managing multiple services in a project.
+
 
 # Architectural Highlights
 

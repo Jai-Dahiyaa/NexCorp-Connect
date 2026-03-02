@@ -511,6 +511,25 @@ Module ready for integration
 - Learned how Docker helps in creating consistent development environments.  
 - Explored how Docker Compose simplifies managing multiple services in a project.
 
+## 2026-03-02  
+
+### Docker Learning + Docker Compose File Implementation  
+
+- Learned the core concepts of Docker and containerization.  
+- Understood how Docker helps in creating isolated and consistent development environments.  
+- Explored basic Docker commands used to manage images and containers.  
+
+- Studied the structure of a Docker Compose file (`docker-compose.yml`).  
+- Learned how services, images, ports, and volumes are defined in a Compose configuration.  
+- Wrote a Docker Compose file to define and run multiple services together.  
+
+- Implemented service configuration using Docker Compose.  
+- Configured container ports and basic environment setup in the Compose file.  
+- Executed the Compose file to start containers using `docker compose up`.  
+
+- Observed how Docker Compose simplifies managing multi-container applications.  
+- Gained hands-on experience in writing and running Docker Compose configurations.
+
 
 # Architectural Highlights
 

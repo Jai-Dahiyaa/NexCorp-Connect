@@ -530,6 +530,31 @@ Module ready for integration
 - Observed how Docker Compose simplifies managing multi-container applications.  
 - Gained hands-on experience in writing and running Docker Compose configurations.
 
+## 2026-03-03  
+
+### Docker Compose Configuration + Debugging  
+
+- Implemented a complete `docker-compose.yml` configuration for the project.  
+- Defined multiple services including the main application, PostgreSQL database, Redis cache, and background workers.  
+- Configured the application service to build the image from the project source using the Dockerfile.  
+
+- Added PostgreSQL service with persistent storage using Docker volumes.  
+- Configured Redis service for queue management and caching.  
+- Connected services using Docker Compose internal networking.  
+
+- Implemented background worker services for handling asynchronous tasks.  
+- Configured separate containers for email worker and post worker processes.  
+- Added environment variables and `.env` integration for secure configuration management.  
+
+- Mapped application and database ports to allow access from the host system.  
+- Used `depends_on` to manage service startup order for database and Redis.  
+
+- Faced multiple configuration and environment-related errors while running Docker Compose.  
+- Spent time debugging issues related to service configuration and environment variables.  
+- Fixed errors and improved understanding of container communication and multi-service setups.  
+
+- Gained practical experience in building and running a full multi-container development environment using Docker Compose.
+
 
 # Architectural Highlights
 

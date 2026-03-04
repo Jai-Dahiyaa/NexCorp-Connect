@@ -556,6 +556,26 @@ Module ready for integration
 - Gained practical experience in building and running a full multi-container development environment using Docker Compose.
 
 
+## 2026-03-04
+
+### Docker Compose Debugging + PostgreSQL Migration Fix + PM2 Learning
+
+- Continued working on the existing `docker-compose.yml` configuration for the project.
+- While running the containers, Redis service was showing errors during startup.
+- Investigated the Redis issue by checking Docker container logs and verifying service configuration.
+- Worked on debugging Redis connection settings inside the Docker Compose environment.
+
+- Encountered a database migration error in the PostgreSQL container.
+- Analyzed the migration failure and reviewed the database environment variables and connection settings.
+- Fixed the migration issue in the PostgreSQL container and verified that migrations run successfully.
+- Confirmed that the application is now able to connect properly with the PostgreSQL service.
+
+- Started learning about PM2 for managing Node.js applications in production environments.
+- Understood how PM2 helps in keeping applications running continuously.
+- Explored basic PM2 commands such as starting, monitoring, and restarting Node.js processes.
+
+- Gained practical experience in debugging Docker services, resolving database migration issues, and understanding process management using PM2.
+
 # Architectural Highlights
 
 - Layered architecture (Controller → Service → Database)

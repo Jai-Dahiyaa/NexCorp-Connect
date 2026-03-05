@@ -576,6 +576,25 @@ Module ready for integration
 
 - Gained practical experience in debugging Docker services, resolving database migration issues, and understanding process management using PM2.
 
+## 2026-03-05
+
+### Redis Debugging + ESLint Configuration + Node.js Cluster Learning
+
+- Continued working with the Docker Compose setup and attempted to resolve the Redis service error.
+- Investigated Redis container logs and reviewed the service configuration in `docker-compose.yml`.
+- The Redis issue is not fully resolved yet, but spent time analyzing the problem and understanding possible causes.
+- Studied how Redis connects with the application and how services communicate inside the Docker network.
+
+- Improved the project code quality by configuring and managing ESLint rules.
+- Organized and adjusted ESLint settings to maintain consistent coding standards across the project.
+- Fixed several linting issues in the codebase and ensured cleaner and more maintainable code.
+
+- Learned about the Node.js cluster module and its purpose in improving application performance.
+- Understood how clustering allows multiple processes to run and utilize multi-core CPU resources.
+- Explored how cluster-based architecture can help scale Node.js applications in production environments.
+
+- Gained deeper understanding of debugging distributed services, managing code quality with ESLint, and learning about Node.js performance optimization using clusters.
+
 # Architectural Highlights
 
 - Layered architecture (Controller → Service → Database)

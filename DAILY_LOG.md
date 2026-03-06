@@ -595,6 +595,28 @@ Module ready for integration
 
 - Gained deeper understanding of debugging distributed services, managing code quality with ESLint, and learning about Node.js performance optimization using clusters.
 
+## 2026-03-06
+
+### Redis Caching + Static Data Storage + Socket.IO User Presence
+
+- Spent time learning how Redis can be used for caching static data in a web application.
+- Understood how frequently accessed data can be stored in Redis to reduce database queries and improve performance.
+- Explored how static or repeated API response data can be cached and served quickly from Redis.
+
+- Studied different approaches to storing and retrieving cached data using Redis.
+- Learned how caching helps improve overall user experience (UX) by reducing response time.
+- Practiced understanding how to structure cache keys and manage cached data effectively.
+
+- Learned how to use Socket.IO to detect whether a user is online or offline.
+- Explored how real-time connections help track active users in the system.
+- Understood how user presence information can help manage caching and real-time data updates.
+
+- Studied the flow of sending authentication tokens to the frontend for secure communication.
+- Learned basic ideas about protecting cached data and ensuring secure handling of tokens.
+- Gained better understanding of how Redis caching, Socket.IO, and authentication flow work together in a scalable backend system.
+
+- Overall focus was on improving backend performance, managing real-time user presence, and understanding safe caching strategies.
+
 # Architectural Highlights
 
 - Layered architecture (Controller → Service → Database)

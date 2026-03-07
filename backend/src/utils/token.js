@@ -1,6 +1,6 @@
-import jwt from 'jsonwebtoken';
-const accessTokenString = process.env.ACCESS_TOKEN || 'djncomskm';
-const refreshTokenString = process.env.REFRESH_TOKEN || 'kcnjsia';
+import jwt from "jsonwebtoken";
+const accessTokenString = process.env.ACCESS_TOKEN || "djncomskm";
+const refreshTokenString = process.env.REFRESH_TOKEN || "kcnjsia";
 
 function accessTokenGenerate(payload) {
   return jwt.sign(payload, accessTokenString, { expiresIn: process.env.ACCESS_EXPIRE });

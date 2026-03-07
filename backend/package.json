@@ -16,7 +16,8 @@
     "migrate:test": "cross-env NODE_ENV=test dotenv -e .env.test -- npx prisma migrate deploy",
     "test": "npm run reset:test && npm run migrate:test && cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test -- jest",
     "test:watch": "cross-env NODE_ENV=test dotenv -e .env.test -- jest --watch",
-    "worker": "node src/jobs/workers/post.worker.js",
+    "worker:post": "node src/jobs/workers/post.worker.js",
+    "worker:email": "node src/jobs/workers/post.worker.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },

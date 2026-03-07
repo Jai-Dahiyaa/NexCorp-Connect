@@ -1,6 +1,6 @@
-import { connectCloudinary } from '../config/cloudinary.js';
+import { connectCloudinary } from "../config/cloudinary.js";
 
-export const uploadImageFromUrl = async (imageUrl, folderName = 'uploads') => {
+export const uploadImageFromUrl = async (imageUrl, folderName = "uploads") => {
   try {
     const cloudinary = connectCloudinary();
     const result = await cloudinary.uploader.upload(imageUrl, {
@@ -8,12 +8,12 @@ export const uploadImageFromUrl = async (imageUrl, folderName = 'uploads') => {
     });
     return result.secure_url;
   } catch (error) {
-    console.error('Cloudinary upload error:', error);
+    console.error("Cloudinary upload error:", error);
     throw error;
   }
 };
 
-export const uploadBufferImage = (fileBuffer, folderName = 'uploads') => {
+export const uploadBufferImage = (fileBuffer, folderName = "uploads") => {
   return new Promise((resolve, reject) => {
     const cloudinary = connectCloudinary();
 

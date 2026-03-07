@@ -1,8 +1,8 @@
-import transporter from '../config/nodemailer.js';
+import transporter from "../config/nodemailer.js";
 
 export const sendTestEmail = async (to, subject, otp) => {
   if (!to) {
-    throw new Error('Recipient email missing');
+    throw new Error("Recipient email missing");
   }
 
   const mailOptions = {
@@ -49,7 +49,7 @@ export const sendTestEmail = async (to, subject, otp) => {
 
 export const sendForgetPasswordEmail = async (to, subject, otp) => {
   if (!to) {
-    throw new Error('Recipient email missing');
+    throw new Error("Recipient email missing");
   }
 
   const mailOptions = {
@@ -93,7 +93,7 @@ export const sendForgetPasswordEmail = async (to, subject, otp) => {
 
 export const sendLoginOtpEmail = async (to, subject, otpCode) => {
   if (!to) {
-    throw new Error('Recipient email missing');
+    throw new Error("Recipient email missing");
   }
 
   const mailOptions = {

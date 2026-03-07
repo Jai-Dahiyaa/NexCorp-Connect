@@ -617,6 +617,25 @@ Module ready for integration
 
 - Overall focus was on improving backend performance, managing real-time user presence, and understanding safe caching strategies.
 
+## 2026-03-07
+
+### Utils Refactoring + Codebase Organization
+
+- Focused on improving project structure by refactoring utility files.
+- Separated reusable logic into dedicated utility modules for better maintainability.
+
+- Refactored the token utility to handle authentication token generation and verification more cleanly.
+- Improved async utility handling to manage async error handling across the application.
+
+- Organized Cloudinary utility functions for handling media upload and storage operations.
+- Refactored email utility to manage email sending functionality in a structured and reusable way.
+
+- Moved shared logic into the `utils` directory to keep the codebase modular and maintainable.
+- Reduced code duplication by centralizing common helper functions.
+
+- Overall goal was to make the backend architecture cleaner, scalable, and easier to maintain.
+- Gained better understanding of backend project structure and code refactoring practices.
+
 # Architectural Highlights
 
 - Layered architecture (Controller → Service → Database)

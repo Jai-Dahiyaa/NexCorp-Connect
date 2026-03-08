@@ -636,6 +636,15 @@ Module ready for integration
 - Overall goal was to make the backend architecture cleaner, scalable, and easier to maintain.
 - Gained better understanding of backend project structure and code refactoring practices.
 
+## 2026-03-08
+
+### Project Update
+
+- From today the development focus has shifted to the **NexCorp Management** project.
+- The **NexCorp Connect** project has been temporarily paused to prioritize this new work.
+- Initial planning and understanding of the NexCorp Management system started today.
+- Reviewed basic project requirements and prepared to begin development from the next tasks.
+
 # Architectural Highlights
 
 - Layered architecture (Controller → Service → Database)

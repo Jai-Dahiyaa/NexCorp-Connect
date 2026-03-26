@@ -1,9 +1,8 @@
 import logger from "../config/logger.js";
-import pkg from "redis";
-const { createClient } = pkg;
+import { createClient } from "redis";
 
 const redisClient = createClient({
-  url: process.env.REDIS_URL,
+  url: process.env.REDIS_URL
 });
 
 redisClient.on("error", (err) => {
@@ -33,8 +32,3 @@ connectRedis();
 
 export default redisClient;
 
-export async function closeRedis() {
-  if (redisClient.isOpen) {
-    await redisClient.quit();
-  }
-}

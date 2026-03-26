@@ -4,10 +4,11 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   email     String   @unique @db.VarChar(50)
   password  String?   @db.VarChar(100) @default("null")
   role      String?   @db.VarChar(50) @default("users")
@@ -28,7 +29,7 @@ model User {
 }
 
 model Social_login {
-  id               Int      @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   user_id          Int
   provider         String 
   provider_user_id String   @unique
@@ -44,7 +45,7 @@ model Social_login {
 }
 
 model Profiles {
-  id         Int      @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   user_id    Int
   full_name  String   @db.VarChar(100) @default("null")
   avatar_url String?  @db.Text
@@ -74,8 +75,8 @@ model Profiles {
 }
 
 model Sessions {
-  id             Int  @id  @default(autoincrement())
-  user_id Int
+  id        Int     @id @default(autoincrement())
+  user_id   Int
   refreshToken   String?
   expires_at     DateTime
   created_at     DateTime @default(now())
@@ -88,7 +89,7 @@ model Sessions {
 }
 
 model Post {
-  id                 Int       @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   createdByUserId    Int       
   assignedToUserId   Int?      
   title              String
@@ -110,7 +111,7 @@ model Post {
 }
 
 model Interest {
-  id        Int      @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   postId    Int
   userId    Int
   createdAt DateTime @default(now())
@@ -123,8 +124,8 @@ model Interest {
 }
 
 model Upload {
-  id                 Int       @id @default(autoincrement())
-  postId             Int       
+  id        Int     @id @default(autoincrement())
+  postId             Int     
   fileUrl            String    
   uploadedByUserId   Int       
   cloudPath          String?   
@@ -137,7 +138,7 @@ model Upload {
 }
 
 model Notification {
-  id         Int      @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   userId     Int
   postId     Int
   actionType String

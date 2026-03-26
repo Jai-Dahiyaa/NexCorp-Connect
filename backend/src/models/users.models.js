@@ -1,14 +1,22 @@
-import pool from '../db/db.js';
+import pool from "../db/index.js";
 
 // Local Auth
 
 export const findByEmail = async (email) => {
-  const res = await pool.query(`SELECT * FROM users WHERE email = $1`, [email]);
+  const res = await pool.query(`
+    SELECT * 
+    FROM users 
+    WHERE "email" = $1`, 
+    [email]);
   return res.rows[0];
 };
 
 export const createUsers = async (email, password) => {
-  const res = await pool.query(`INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *`, [
+  const res = await pool.query(`
+    INSERT INTO users 
+    ("email", "password") 
+    VALUES ($1, $2) 
+    RETURNING *`, [
     email,
     password,
   ]);
@@ -16,46 +24,70 @@ export const createUsers = async (email, password) => {
 };
 
 export const insertUserRole = async (email, role) => {
-  const res = await pool.query(
-    `UPDATE users SET role = $1 WHERE email = $2 RETURNING id, email, role, status, created_at`,
+  const res = await pool.query(`
+    UPDATE users 
+    SET "role" = $1 
+    WHERE "email" = $2 
+    RETURNING "id", "email", "role", "status", "created_at"`,
     [role, email]
   );
   return res.rows[0];
 };
 
 export const getPassworsLogin = async (email) => {
-  const res = await pool.query(`SELECT password FROM users WHERE email = $1`, [email]);
+  const res = await pool.query(`
+    SELECT password 
+    FROM users 
+    WHERE "email" = $1`, 
+    [email]);
   return res.rows[0];
 };
 
 export const loginUserGet = async (password) => {
-  const res = await pool.query(`SELECT * FROM users WHERE password = $1`, [password]);
+  const res = await pool.query(`
+    SELECT * 
+    FROM users 
+    WHERE "password" = $1`, 
+    [password]);
   return res.rows[0];
 };
 
 export const statusChangeTrue = async (email) => {
-  const res = await pool.query(
-    `UPDATE Users SET status = 'true' WHERE email = $1 RETURNING id, email, status`,
+  const res = await pool.query(`
+    UPDATE Users 
+    SET "status" = 'true' 
+    WHERE "email" = $1 
+    RETURNING "id", "email", "status"`,
     [email]
   );
   return res.rows[0];
 };
 
 export const statusChangeFalse = async (email) => {
-  const res = await pool.query(
-    `UPDATE Users SET status = 'false' WHERE email = $1 RETURNING id, email, status`,
+  const res = await pool.query(`
+    UPDATE Users 
+    SET "status" = 'false' 
+    WHERE "email" = $1 
+    RETURNING "id", "email", "status"`,
     [email]
   );
   return res.rows[0];
 };
 
-export const refreshRouteGetUsers = async (email) => {
-  const res = await pool.query(`SELECT * FROM users WHERE email = $1`, [email]);
+export const refreshRouteGetUsers = async (id) => {
+  const res = await pool.query(`
+    SELECT * 
+    FROM users 
+    WHERE "id" = $1`, 
+    [id]);
   return res.rows[0];
 };
 
 export const forgetUserPassword = async (email, password) => {
-  const res = await pool.query(`UPDATE users SET password = $1 WHERE email = $2`, [
+  const res = await pool.query(`
+    UPDATE users 
+    SET "password" = $1 
+    WHERE "email" = $2`, [
     password,
     email,
   ]);
@@ -63,8 +95,10 @@ export const forgetUserPassword = async (email, password) => {
 };
 
 export const userLoginOTPQuery = async (email) => {
-  const res = await pool.query(
-    `SELECT id, email, role, status, created_at  FROM users WHERE email = $1`,
+  const res = await pool.query(`
+    SELECT "id", "email", "role", "status", "created_at" 
+    FROM users 
+    WHERE "email" = $1`,
     [email]
   );
   return res.rows[0];
@@ -73,7 +107,10 @@ export const userLoginOTPQuery = async (email) => {
 // OAuth
 
 export const oauthLoginSocial = async (email) => {
-  const res = await pool.query(`INSERT INTO users (email) VALUES ($1) RETURNING id, email`, [
+  const res = await pool.query(`
+    INSERT INTO users ("email") 
+    VALUES ($1) 
+    RETURNING "id", "email"`, [
     email,
   ]);
   return res.rows[0];

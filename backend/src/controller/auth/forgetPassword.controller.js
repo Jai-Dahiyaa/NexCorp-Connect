@@ -1,35 +1,35 @@
-import catchAsync from '../../utils/catchAsync.js';
-import AppError from '../../utils/appError.js';
-import userForgetPasswordService from '../../services/auth/forgetPassword.service.js';
-import redisClient from '../../config/redis.js';
-import { generateOTP } from '../../utils/otpGenerate.js';
-import bcrypt from 'bcrypt';
-import * as userModel from '../../models/users.models.js';
-import jwt from 'jsonwebtoken';
-import utilsToken from '../../utils/token.js';
-import { forgetPassEmailOTPQueue } from '../../jobs/queue/email.queue.js';
+import catchAsync from "../../utils/catchAsync.js";
+import AppError from "../../utils/appError.js";
+import userForgetPasswordService from "../../services/auth/forgetPassword.service.js";
+import redisClient from "../../config/redis.js";
+import { generateOTP } from "../../utils/otpGenerate.js";
+import bcrypt from "bcrypt";
+import * as userModel from "../../models/users.models.js";
+import jwt from "jsonwebtoken";
+import utilsToken from "../../utils/token.js";
+import { forgetPassEmailOTPQueue } from "../../jobs/queue/email.queue.js";
 
 const forgetUserPasswordController = catchAsync(async (req, res) => {
   const { email } = req.body;
 
-  if (!email) throw new AppError('Email require please enter', 404);
+  if (!email) throw new AppError("Email require please enter", 404);
 
   const findUsers = await userModel.findByEmail(email);
 
-  if (!findUsers) throw new AppError('User are not found', 404);
+  if (!findUsers) throw new AppError("User are not found", 404);
 
   const verifyOTP = generateOTP();
 
-  await redisClient.set(`otp:forgetPass:${email}`, verifyOTP, {EX: 300})
+  await redisClient.set(`otp:forgetPass:${email}`, verifyOTP, {EX: 300});
 
   const hashOTP = await bcrypt.hash(verifyOTP, 10);
 
-  await forgetPassEmailOTPQueue.add('Forget OTP email send queue', {to: email, subject: 'Forget PASSWORD', otp: verifyOTP});
+  await forgetPassEmailOTPQueue.add("Forget OTP email send queue", {to: email, subject: "Forget PASSWORD", otp: verifyOTP});
 
   await redisClient.set(`otp:reset-pass:${email}`, hashOTP, { EX: 300 });
 
   //redirect verify forgetOTP Password route
-  res.status(200).json({ message: 'otp send successfully your email'});
+  res.status(200).json({status: true, message: "otp send successfully your email"});
 });
 
 const forgetPaawordOTPVerify = catchAsync(async (req, res) => {
@@ -40,10 +40,10 @@ const forgetPaawordOTPVerify = catchAsync(async (req, res) => {
 
   const verifyOTP = bcrypt.compare(otp, hashOTP);
 
-  if (!verifyOTP) throw new AppError('OTP is invalid please try again', 403);
+  if (!verifyOTP) throw new AppError("OTP is invalid please try again", 403);
 
   await redisClient.del(redisKey);
-  await redisClient.del(`otp:forgetPass:${email}`)
+  await redisClient.del(`otp:forgetPass:${email}`);
 
   const payload = {
     email: email,
@@ -53,23 +53,23 @@ const forgetPaawordOTPVerify = catchAsync(async (req, res) => {
 
   await redisClient.set(`otp:session-token:${forgetToken}`, email, { EX: 300 });
 
-  res.cookie('reset-session', forgetToken, {
+  res.cookie("reset-session", forgetToken, {
     httpOnly: true,
     secure: true,
     maxAge: 15 * 60 * 1000,
   });
 
   //redirect new password route
-  res.status(200).json({ message: 'Password Reset OTP Verify' });
+  res.status(200).json({status: true, message: "Password Reset OTP Verify" });
 });
 
 const resetNewUserPassword = catchAsync(async (req, res) => {
   const { pass1, pass2 } = req.body;
-  const resetSession = req.cookies?.['reset-session'];
+  const resetSession = req.cookies?.["reset-session"];
 
-  if (!pass1 || !pass2) throw new AppError('Please enter your correct password', 403);
-  if (pass1 !== pass2) throw new AppError('Passwords do not match', 403);
-  if (!resetSession) throw new AppError('Please try to verify a OTP Thanks', 403);
+  if (!pass1 || !pass2) throw new AppError("Please enter your correct password", 403);
+  if (pass1 !== pass2) throw new AppError("Passwords do not match", 403);
+  if (!resetSession) throw new AppError("Please try to verify a OTP Thanks", 403);
 
   // const verifyToken = jwt.verify(resetSession, process.env.ACCESS_TOKEN);
   // if (!verifyToken)
@@ -78,15 +78,15 @@ const resetNewUserPassword = catchAsync(async (req, res) => {
   const redisKey = `otp:session-token:${resetSession}`;
   const redisEmail = await redisClient.get(redisKey);
 
-  if (!redisEmail) throw new AppError('Please a verify OTP please', 403);
+  if (!redisEmail) throw new AppError("Please a verify OTP please", 403);
 
   const decode = jwt.decode(resetSession);
-  if (!decode.email && !redisEmail) throw new AppError('First setup is otp verify please', 403);
-  if(decode.email !== redisEmail) throw new AppError('email is not match please try again', 403);
+  if (!decode.email && !redisEmail) throw new AppError("First setup is otp verify please", 403);
+  if(decode.email !== redisEmail) throw new AppError("email is not match please try again", 403);
 
   await userForgetPasswordService(redisEmail, pass1);
 
-  await redisClient.del(redisKey)
+  await redisClient.del(redisKey);
   
   // res.clearCookie('reset-session', {
   //   httpOnly: true,
@@ -96,7 +96,7 @@ const resetNewUserPassword = catchAsync(async (req, res) => {
   // });
 
   //redirect login route
-  res.status(200).json({ message: 'Your password change successfull' });
+  res.status(200).json({status: true, message: "Your password change successfull" });
 });
 
 export default {

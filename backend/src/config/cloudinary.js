@@ -1,5 +1,5 @@
-import { v2 as cloudinary } from 'cloudinary';
-import logger from './logger.js';
+import { v2 as cloudinary } from "cloudinary";
+import logger from "./logger.js";
 
 export const connectCloudinary = () => {
   try {
@@ -13,13 +13,13 @@ export const connectCloudinary = () => {
       process.env.CLOUDINARY_API_KEY &&
       process.env.CLOUDINARY_API_SECRET
     ) {
-      logger.info('Cloudinary connected successfully');
+      logger.info("Cloudinary connected successfully");
     } else {
-      logger.error('Cloudinary config missing keys');
+      logger.error("Cloudinary config missing keys");
     }
     return cloudinary;
   } catch (error) {
-    console.error('Cloudinary connection failed:', error.message);
+    console.error("Cloudinary connection failed:", error.message);
     throw error;
   }
 };

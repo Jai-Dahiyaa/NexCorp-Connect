@@ -1,9 +1,9 @@
-import * as userModel from '../../models/users.models.js';
-import AppError from '../../utils/appError.js';
-import bcrypt from 'bcrypt';
+import * as userModel from "../../models/users.models.js";
+import AppError from "../../utils/appError.js";
+import bcrypt from "bcrypt";
 
 const userForgetPasswordService = async (email, password) => {
-  if (!email || !password) throw new AppError('missing email and password', 404);
+  if (!email || !password) throw new AppError("missing email and password", 404);
 
     const hashPass = await bcrypt.hash(password, 10);
   
@@ -20,7 +20,7 @@ const userForgetPasswordService = async (email, password) => {
 
   const users = await userModel.forgetUserPassword(email, hashPass);
 
-  return { message: 'SuccessFully update your Password', users };
+  return { message: "SuccessFully update your Password", users };
 };
 
 export default userForgetPasswordService;

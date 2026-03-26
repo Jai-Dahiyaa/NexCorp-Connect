@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   app:
     build: .
@@ -7,27 +9,40 @@ services:
       - postgres
       - redis
     env_file:
-      - .env 
+      - .env
     environment:
-      DB_HOST: postgres
-      DB_PORT: ${DB_PORT}
-      DB_USER: ${DOCKER_DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
-      DB_DATABASE: ${DB_DATABASE}
-      DATABASE_URL: ${DATABASE_URL}
-      REDIS_URL: ${REDIS_URL}
+      DATABASE_URL: ${DOCKER_DATABASE_URL}
+      DOCKER_REDIS_URL: redis://redis:6379
+      QUEUE_CONNECTION: redis
+      QUEUE_PORT: 6379
+      EMAIL_USER: ${EMAIL_USER}
+      EMAIL_PASS: ${EMAIL_PASS}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      GOOGLE_CALLBACK_URL: ${GOOGLE_CALLBACK_URL}
+      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID}
+      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET}
+      GITHUB_CALLBACK_URL: ${GITHUB_CALLBACK_URL}
+      ACCESS_TOKEN: ${ACCESS_TOKEN}
+      ACCESS_EXPIRE: ${ACCESS_EXPIRE}
+      REFRESH_TOKEN: ${REFRESH_TOKEN}
+      REFRESH_EXPIRE: ${REFRESH_EXPIRE}
+      CLOUDINARY_NAME: ${CLOUDINARY_NAME}
+      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY}
+      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET}
     ports:
       - "4000:4000"
 
   postgres:
     image: postgres:15
     container_name: postgres
+    restart: always
     environment:
-      POSTGRES_DB: ${DOCKER_DB_NAME}
       POSTGRES_USER: ${DOCKER_DB_USER}
       POSTGRES_PASSWORD: ${DOCKER_DB_PASSWORD}
+      POSTGRES_DB: ${DOCKER_DB_NAME}
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -35,7 +50,27 @@ services:
     image: redis:7
     container_name: redis
     ports:
-      - "6379:6379"
+      - "6380:6379"
+
+  email-worker:
+    build: .
+    command: [ "npm", "run", "worker:email" ]
+    container_name: email_worker
+    env_file: .env
+    environment:
+      DATABASE_URL: ${DOCKER_DATABASE_URL}
+      QUEUE_CONNECTION: redis
+      QUEUE_PORT: 6379
+
+  post-worker:
+    build: .
+    command: [ "npm", "run", "worker:post" ]
+    container_name: post_worker
+    env_file: .env
+    environment:
+      DATABASE_URL: ${DOCKER_DATABASE_URL}
+      QUEUE_CONNECTION: redis
+      QUEUE_PORT: 6379
 
 volumes:
   postgres_data:

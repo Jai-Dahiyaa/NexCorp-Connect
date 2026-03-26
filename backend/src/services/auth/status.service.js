@@ -1,8 +1,8 @@
-import * as userModel from '../../models/users.models.js';
-import AppError from '../../utils/appError.js';
+import * as userModel from "../../models/users.models.js";
+import AppError from "../../utils/appError.js";
 
 const userStatusService = async (email) => {
-  if (!email) throw new AppError('Please Enter Your Email', 404);
+  if (!email) throw new AppError("Please Enter Your Email", 404);
 
   const userStatus = await userModel.statusChangeTrue(email);
 
@@ -10,7 +10,7 @@ const userStatusService = async (email) => {
 };
 
 const userStatusFalse = async (email) => {
-  if (!email) throw new AppError('Please Enter Your Email', 404);
+  if (!email) throw new AppError("Please Enter Your Email", 404);
 
   const userStatus = await userModel.statusChangeFalse(email);
   return { userStatus };

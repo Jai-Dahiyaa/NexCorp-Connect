@@ -1,71 +1,84 @@
-import * as usersModels from '../../models/users.models.js';
-import AppError from '../../utils/appError.js';
-import * as socialLogin from '../../models/socialLogin.models.js';
-import { profileInserData } from '../../models/profile.models.js';
-import bcrypt from 'bcrypt';
+import * as usersModels from "../../models/users.models.js";
+import AppError from "../../utils/appError.js";
+import * as socialLogin from "../../models/socialLogin.models.js";
+import { profileInserDataOAuth } from "../../models/profile.models.js";
 
-const oauthServiceFunction = async (profile) => {
-  if (!profile) throw new AppError(`Platfrom auth problem Please try again`, 500);
+const oauthServiceFunction = async (userProfile) => {
+  const profile = userProfile;
 
-  const platform = profile.provider;
-  const id = profile.id;
-  const name = profile.displayName || profile.username || 'NoName';
-  const email = profile.emails?.[0]?.value || profile.email || null;
-  const photo = profile.photos?.[0]?.value || profile.avatar_url || null;
+  if (!profile) throw new AppError("Platfrom auth problem Please try again", 500);
 
-  if (!platform || !id || !email) {
-    throw new AppError('Essential user detail missing', 400);
+  const findUserHere = await usersModels.findByEmail(profile.email);
+
+  if (findUserHere) {
+    const userAlreadySign = await userAlreadyRegister(profile, findUserHere);
+    return userAlreadySign;
   }
 
-  const userData = {
-    platform,
-    platformId: id,
-    name,
-    email,
-    photo,
+  const profileDataObj = {
+    id: profile.id,
+    email: profile.email,
+    name: profile.name,
+    provider: profile.provider,
+    image: profile.photo,
   };
 
-  const findUser = await usersModels.findByEmail(userData.email);
+  let firstRegisterUser = {
+    id: null,
+    email: null,
+    provider: null,
+  };
 
-  if (findUser) {
-    const updateUsers = await socialLogin.updateSocialLogin(
-      userData.platform,
-      userData.platformId,
-      findUser.id
-    );
+  const firstInsertUserSocialData = await usersModels.oauthLoginSocial(profileDataObj.email);
 
-    return { message: 'Welcome Back', user: findUser, social: updateUsers };
+  const userSocialDataInsert = await socialLogin.socialLoginDataInsert(firstInsertUserSocialData.id, profileDataObj.provider, profileDataObj.id);
 
-    // throw new AppError('User Already Register', 409);
-  } else {
-    const insertUserSocialData = await usersModels.oauthLoginSocial(userData.email);
-
-    const authUserData = {
-      id: insertUserSocialData.id,
-      email: insertUserSocialData.email,
-    };
-
-    const platformIdHash = await bcrypt.hash(userData.platformId, 10);
-
-    const socialLoginDB = await socialLogin.socialLogin(
-      authUserData.id,
-      userData.platform,
-      platformIdHash
-    );
-
-    const profileUpdate = await profileInserData(userData.name, userData.photo, authUserData.id);
-
-    if (!authUserData.email && !authUserData.id)
-      throw new AppError('Bad Request Please try again', 400);
-
-    return {
-      message: `user register successfully`,
-      user: insertUserSocialData.email,
-      social: userData.platform,
-      profile: profileUpdate,
-      socialLoginDB,
-    };
+  if (firstInsertUserSocialData && userSocialDataInsert) {
+    firstRegisterUser.id = firstInsertUserSocialData.id;
+    firstRegisterUser.email = firstInsertUserSocialData.email;
+    firstRegisterUser.provider = profileDataObj.provider;
   }
+
+  await profileInserDataOAuth(profileDataObj.name, profileDataObj.image, firstInsertUserSocialData.id);
+
+  if (!firstRegisterUser) throw new AppError("User create successfully please try again", 401);
+  if (profileDataObj.id !== userSocialDataInsert.provider_user_id) throw new AppError("Platform id is not equal please try again", 401);
+
+  return firstRegisterUser;
+
 };
+
+async function userAlreadyRegister(profile, findUserHere) {
+  if (!profile) throw new AppError("Profile is missing please try again", 404);
+
+  let user = {
+    id: null,
+    email: null,
+    provider: null,
+  };
+
+  if (findUserHere) {
+    user.id = findUserHere.id;
+    user.email = findUserHere.email;
+  }
+
+  let socialTableFindUser = await socialLogin.findUserInSocail(findUserHere.id);
+
+  if (!socialTableFindUser) {
+    const userSocialDataInsert = await socialLogin.socialLoginDataInsert(findUserHere.id, profile.provider, profile.id);
+    socialTableFindUser = userSocialDataInsert;
+  }
+
+  if (socialTableFindUser) {
+    await socialLogin.updateSocialLogin(socialTableFindUser.user_id);
+    user.provider = socialTableFindUser.provider;
+  }
+
+  if (profile.id !== socialTableFindUser.provider_user_id) throw new AppError("User id is not match perfect please try again", 401);
+
+  if (!user) throw new AppError("Please try again", 401);
+
+  return user;
+}
 
 export default oauthServiceFunction;

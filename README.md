@@ -183,3 +183,5 @@ Once the server is running, access the documentation via:
 ## Conclusion
 
 NexCorp Connect demonstrates the design and implementation of a scalable backend system with production-level practices. It reflects strong understanding of backend architecture, security, performance optimization, and real-world system design.
+
+This project is currently under active development and continuously being improved with new features and enhancements.
